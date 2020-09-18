@@ -14,8 +14,8 @@ class HomeView(ListView):
 
 class BoardsView(ListView):
     model = Board
-    template_name = 'blog/boards.html'
-    context_object_name = 'board_list'
+    template_name = 'blog/board_list.html'
+    context_object_name = 'boards'
 
 class BoardDetailView(DetailView):
     model = Board

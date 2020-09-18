@@ -13,24 +13,24 @@
 
 {% block content %}
     {% if boards %}
-    <div class='list-group py-3'>
-        {% for board in boards %}
-        <a href="{% url 'board-detail-list' board.id %}" class='list-group-item list-group-item-action'>
-            <div>
-                <h5>{{ board.title }}</h5>
-            </div>
-            <div>
-                <small>{{ board.description }}</small>
-            </div>
-        </a>
-        {% endfor %}
-    </div>
-    {% else %}
-    <div class='jumbotron m-3'>
-        <h3 class='display-4'>Looks like there aren't any boards here!</h3>
-        <div class='border-top pt-3'>
-            <small class='text-muted'>Click "Create Board" above to create a new board.</small>
+        <div class='list-group py-3'>
+            {% for board in boards %}
+            <a href="{% url 'board-detail-list' board.id %}" class='list-group-item list-group-item-action'>
+                <div>
+                    <h5>{{ board.title }}</h5>
+                </div>
+                <div>
+                    <small>{{ board.description }}</small>
+                </div>
+            </a>
+            {% endfor %}
         </div>
-    </div>
+    {% else %}
+        <div class='jumbotron m-3'>
+            <h3 class='display-4'>Looks like there aren't any boards here!</h3>
+            <div class='border-top pt-3'>
+                <small class='text-muted'>Click "Create Board" above to create a new board.</small>
+            </div>
+        </div>
     {% endif %}
 {% endblock content %}

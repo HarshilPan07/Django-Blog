@@ -4,7 +4,7 @@ from django.shortcuts import reverse
 from django.utils import timezone
 
 class Board(models.Model):
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, unique=True)
     description = models.TextField(max_length=2000)
 
     def __str__(self):
@@ -25,6 +25,6 @@ class Post(models.Model):
         return self.title
     
     def get_absolute_url(self):
-        return reverse("post", kwargs={"board_pk": self.board.pk, "post_pk": self.pk})
+        return reverse("post", kwargs={"pk": self.pk})
         
     
