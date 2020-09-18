@@ -1,0 +1,58 @@
+{% extends 'blog/base.html' %}
+
+{% block header %}
+    <div class='row py-3 border-bottom'>
+        <div class='mr-auto'>
+            <h4>Recent Posts</h4>
+        </div>
+        <div>
+            <a href="{% url 'create-post' %}" role='button' class='btn btn-outline-primary'>Create Post</a>
+        </div>
+    </div>
+{% endblock header %}
+
+{% block content %}
+    {% if posts %} 
+    <div class='list-group py-3'>
+        {% for post in page_obj %}
+        <a href="{% url 'post' post.id %}" class='list-group-item list-group-item-action'>
+            <div>
+                <h5>{{ post.title }}</h5>
+                <small>r/{{ post.board }}</small>
+            </div>
+            <div>
+                <small>posted {{ post.date_posted }} by {{ post.author }}</small>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+
+    <div class='d-flex justify-content-end'>
+        <span class='step-links'>
+            {% if page_obj.has_previous %}
+                <a href="?page=1">First</a>
+                |
+                <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            {% endif%}
+
+            <span class='current'>
+                [Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}]
+            </span>
+            
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Next</a>
+                |
+                <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+            {% endif %}
+        </span>
+    </div>
+    {% else %}
+    <div class='jumbotron m-3'>
+        <h3 class='display-4'>Looks like there aren't any posts here!</h3>
+        <div class='border-top pt-3'>
+            <small class='text-muted'>Click "Create Post" above to add a new post.</small>
+        </div>
+    </div>
+    {% endif %}
+
+{% endblock content %}

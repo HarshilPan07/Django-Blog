@@ -1,0 +1,25 @@
+{% extends 'blog/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block header %}
+<div class='py-3'>
+    <h4>Login</h4>
+</div>
+{% endblock header %}
+
+{% block content %}
+<div class='form-group'>
+    <form action="" method='POST'>
+        {% csrf_token %}
+        {{form | crispy}}
+        <div class='row'>
+            <div class='mr-auto'>
+                <small>Don't Have An Account? <a href="{% url 'register' %}">Register Here</a></small>
+            </div>
+            <div>
+                <button type='submit' class='btn btn-outline-primary'>Sign In</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock content %}

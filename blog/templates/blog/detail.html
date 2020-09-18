@@ -1,0 +1,24 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div class='card m-3'>
+    <h5 class='card-header'>
+        {{ post.title }}
+        <div class='row'>
+            <div class='col-10'>
+                <small>Posted {{ post.date_posted }} by {{ post.author }}</small>
+            </div>
+            <div class='col-2'>
+                {% if user == post.author %}
+                    <small><a href="{% url 'update-post' post.id %}">Edit Post</a></small>
+                    <small><a href="{% url 'delete-post' post.id %}">Delete Post</a></small>
+                {% endif %}
+            </div>
+        </div>
+    </h5>
+    <div class='card-body'>
+        <p>{{ post.content }}</p>
+    </div>
+    
+</div>
+{% endblock content %}
