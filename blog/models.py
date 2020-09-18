@@ -37,5 +37,6 @@ class Comment(models.Model):
     def __str__(self):
         return self.content
     
-    def __str__(self):
-        return redirect('home')
+    def get_absolute_url(self):
+        return reverse("post", kwargs={"pk": self.pk})
+    

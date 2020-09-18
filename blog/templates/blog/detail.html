@@ -24,12 +24,14 @@
 
 <div>
     <div>
-        <h4>Comments</h4>
-        <form action="#" method="POST">
-            {% csrf_token %}
-            {{ comment_form|crispy }}
-            <button class='btn btn-primary' type="submit">Add Comment</button>
-        </form>
+        <span>
+            <h4>Comments</h4>
+            <form action="#" method="POST">
+                {% csrf_token %}
+                {{ comment_form|crispy }}
+                <button class='btn btn-primary' type="submit">Add Comment</button>
+            </form>
+        </span>
         <hr>
     </div>
     {% if post.comment_set.all %}

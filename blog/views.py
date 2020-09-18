@@ -1,6 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.decorators import login_required
 
 from .models import Board, Post, Comment
 from .forms import BoardForm, PostForm, CommentForm
@@ -20,10 +21,6 @@ class BoardsView(ListView):
 class BoardDetailView(DetailView):
     model = Board
     template_name = 'blog/board_post_list.html'
-
-class PostView(DetailView):
-    model = Post
-    template_name = 'blog/detail.html'
 
 class CreateBoardView(LoginRequiredMixin, CreateView):
     model = Board
@@ -73,20 +70,24 @@ class DeletePostView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             return True
         return False
 
-def add_comment(request, pk):
+@login_required(redirect_field_name='redirect-to', login_url='login')
+def post_view(request, pk):
     post = get_object_or_404(Post, pk=pk)
-
+    
     if request.method == 'POST':
         comment_form = CommentForm(request.POST)
 
         if comment_form.is_valid():
-            comment = comment_form.save()
+            comment = comment_form.save(commit=False)
             comment.post = post
-            comment.commenter = post.author
+            comment.commenter = request.user
             comment.save()
-
-            return redirect('post', pk=post.pk)
+        
+        return redirect('post', pk=pk)
+        
     else:
         comment_form = CommentForm()
     
-    return render(request, 'blog/detail.html', {'comment_form': comment_form})
+    context = {'post': post, 'comment_form': comment_form}
+
+    return render(request, 'blog/detail.html', context)
