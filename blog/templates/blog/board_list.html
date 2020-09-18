@@ -1,37 +1,36 @@
 {% extends 'blog/base.html' %}
 
-{% block header %}    
+{% block header %}
     <div class='row py-3 border-bottom'>
         <div class='mr-auto'>
-            <h4>Posts in {{ board }}</h4>
+            <h4>All Boards</h4>
         </div>
         <div>
-            <a href="{% url 'create-post' %}" role='button' class='btn btn-outline-primary'>Create Post</a>
+            <a href="{% url 'create-board' %}" role='button' class='btn btn-outline-primary'>Create Board</a>
         </div>
     </div>
 {% endblock header %}
 
 {% block content %}
-    {% if board.post_set.all %}
-        <div class='list-group py-3'>
-            {% for post in board.post_set.all %}
-            <a href="{% url 'post' post.id %}" class='list-group-item list-group-item-action'>
-                <div>
-                    <h5>{{ post.title }}</h5>
-                </div>
-                <div>
-                    <small>posted {{post.date_posted}} by {{ post.author }}</small>
-                </div>
-            </a>
-            {% endfor %}
-        </div>
-    {% else %}
-        <div class='jumbotron m-3'>
-            <h3 class='display-4'>Looks like there aren't any posts here!</h3>
-            <div class='border-top pt-3'>
-                <small class='text-muted'>Click "Create Post" above to add a new post.</small>
+    {% if boards %}
+    <div class='list-group py-3'>
+        {% for board in boards %}
+        <a href="{% url 'board-detail-list' board.id %}" class='list-group-item list-group-item-action'>
+            <div>
+                <h5>{{ board.title }}</h5>
             </div>
+            <div>
+                <small>{{ board.description }}</small>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class='jumbotron m-3'>
+        <h3 class='display-4'>Looks like there aren't any boards here!</h3>
+        <div class='border-top pt-3'>
+            <small class='text-muted'>Click "Create Board" above to create a new board.</small>
         </div>
+    </div>
     {% endif %}
-    
 {% endblock content %}
