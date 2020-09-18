@@ -1,4 +1,5 @@
 {% extends 'blog/base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 <div class='card m-3'>
@@ -19,5 +20,36 @@
                 <small><a href="{% url 'delete-post' post.id %}">| Delete Post</a></small>
             {% endif %}
     </div>
+</div>
+
+<div>
+    <div>
+        <h4>Comments</h4>
+        <form action="#" method="POST">
+            {% csrf_token %}
+            {{ comment_form|crispy }}
+            <button class='btn btn-primary' type="submit">Add Comment</button>
+        </form>
+        <hr>
+    </div>
+    {% if post.comment_set.all %}
+        <div class='list-group py-3'>
+            {% for comment in post.comment_set.all %}
+            <a href="#" class='list-group-item list-group-item-action'>
+                <div>
+                    <h5>{{ comment.content }}</h5>
+                    <small>Posted by {{ comment.commenter }} on {{ comment.date_posted }}</small>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class='jumbotron m-3'>
+            <h3 class='display-4'>Looks like there aren't any comments here!</h3>
+            <div class='border-top pt-3'>
+                <small class='text-muted'>Click "Add Comment" above to add a new comment.</small>
+            </div>
+        </div>
+    {% endif %}
 </div>
 {% endblock content %}

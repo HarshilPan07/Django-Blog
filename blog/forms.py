@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from django import forms
 
-from .models import Board, Post
+from .models import Board, Post, Comment
 
 class BoardForm(ModelForm):
     class Meta:
@@ -23,4 +23,12 @@ class PostForm(ModelForm):
         'content': forms.Textarea(attrs={'class': 'form-control'}),
         'board': forms.Select(attrs={'class': 'form-control'})
     }
-      
+
+class CommentForm(ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
+    
+    widgets = {
+        'content': forms.Textarea(attrs={'class': 'form-control'}),
+    }

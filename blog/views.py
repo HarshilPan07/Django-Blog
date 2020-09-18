@@ -1,9 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
-from .models import Board, Post
-from .forms import BoardForm, PostForm
+from .models import Board, Post, Comment
+from .forms import BoardForm, PostForm, CommentForm
 
 class HomeView(ListView):
     model = Post
@@ -72,3 +72,21 @@ class DeletePostView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if self.request.user == post.author:
             return True
         return False
+
+def add_comment(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+
+        if comment_form.is_valid():
+            comment = comment_form.save()
+            comment.post = post
+            comment.commenter = post.author
+            comment.save()
+
+            return redirect('post', pk=post.pk)
+    else:
+        comment_form = CommentForm()
+    
+    return render(request, 'blog/detail.html', {'comment_form': comment_form})
