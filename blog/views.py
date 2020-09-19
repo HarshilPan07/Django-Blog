@@ -73,7 +73,7 @@ class DeletePostView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 @login_required(redirect_field_name='redirect-to', login_url='login')
 def post_view(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    
+
     if request.method == 'POST':
         comment_form = CommentForm(request.POST)
 
@@ -82,8 +82,6 @@ def post_view(request, pk):
             comment.post = post
             comment.commenter = request.user
             comment.save()
-        
-        return redirect('post', pk=pk)
         
     else:
         comment_form = CommentForm()

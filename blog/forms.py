@@ -30,5 +30,8 @@ class CommentForm(ModelForm):
         fields = ['content']
     
     widgets = {
-        'content': forms.Textarea(attrs={'class': 'form-control', 'rows':5, 'cols':15}),
+        'content': forms.Textarea(attrs={'class': 'form-control', 'rows':2, 'cols':5}),
     }
+
+class EditComment(ModelForm):
+    pass
