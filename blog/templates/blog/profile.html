@@ -2,70 +2,65 @@
 {% load crispy_forms_tags %}
 
 {% block header %}
-    <div class='py-3'>
-        <h4>{{ profile_user.username }}'s Profile</h4>
-        <hr>
+    <hr>
+    <div class='py-3 row'>
+        <div class='col-4'>
+            <img src="{{ profile_user.profile.picture.url }}" class='rounded-circle account-img border' alt="">
+        </div>
+        <div class='col-8 align-self-center'>
+            <h4>{{ profile_user.username }}'s Profile</h4>
+        </div>
     </div>
+    <hr>
 {% endblock header %}
 
-{% block content %}
-    <div class='content-section'>
-        <div class='row'>
-            <div class='col-8'>
-                <img src="{{ profile_user.profile.picture.url }}" class='rounded-circle account-img border' alt="">
-            </div>
-            <div class='media-body col-4 align-self-center'>
-                <p class='text-secondary'>Username: {{ profile_user.username }}</p>
-                <p class='text-secondary'>Email: {{ profile_user.email }}</p>
-            </div>
+{% block content %}    
+    <div class='card'>    
+        <div class='card-header'>
+            <h5>Posts</h5>
         </div>
-        <hr>
+        <div class='list-group'>
+            {% for post in page_obj %}
+            <a href="{% url 'post' post.id %}" class='list-group-item list-group-item-action'>
+                <div>
+                    {{ post.title }}
+                </div>
+                <div>
+                    <small>posted {{post.date_posted}} by {{ post.author }}</small>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+
+        {% if page_obj.paginator.num_pages > 1%}
+            <div class='card-footer d-flex justify-content-end'>
+                <span class='step-links'>
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1">First</a>
+                        |
+                        <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    {% endif%}
+        
+                    <span class='current'>
+                        [Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}]
+                    </span>
+                    
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">Next</a>
+                        |
+                        <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                    {% endif %}
+                </span>
+            </div>
+        {% endif %}
     </div>
     
-    <div class='row d-flex'>    
-        <div class='col'>
-            <h5>Posts</h5>
-            <div class='list-group py-3'>
-                {% for post in page_obj %}
-                <a href="{% url 'post' post.id %}" class='list-group-item list-group-item-action'>
-                    <div>
-                        {{ post.title }}
-                    </div>
-                    <div>
-                        <small>posted {{post.date_posted}} by {{ post.author }}</small>
-                    </div>
-                </a>
-                {% endfor %}
-            </div>
-
-            {% if page_obj.paginator.num_pages > 1%}
-                <div class='d-flex justify-content-end'>
-                    <span class='step-links'>
-                        {% if page_obj.has_previous %}
-                            <a href="?page=1">First</a>
-                            |
-                            <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
-                        {% endif%}
-            
-                        <span class='current'>
-                            [Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}]
-                        </span>
-                        
-                        {% if page_obj.has_next %}
-                            <a href="?page={{ page_obj.next_page_number }}">Next</a>
-                            |
-                            <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-                        {% endif %}
-                    </span>
-                </div>
-            {% endif %}
-        </div>
-    </div>
-    <div class='row d-flex pt-3'>
+    <div class='card my-5 d-flex'>
         {% if user == profile_user %}
-        <div class='col'>
-            <h5>Update Information</h5>
-            <div class='form-group'>
+            <div class='card-header'>
+                <h5>Update Information</h5>
+            </div>
+            <div class='card-body form-group'>
                 <form action="" method='POST' enctype='multipart/form-data'>
                     {% csrf_token %}
                     {{ user_update_form | crispy}}
@@ -73,7 +68,6 @@
                     <button type='submit' class='btn btn-outline-primary'>Update User Information</button>
                 </form>
             </div>
-        </div>
         {% endif %}   
     </div>
 {% endblock content %}
