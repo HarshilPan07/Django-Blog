@@ -89,3 +89,4 @@ def post_view(request, pk):
     context = {'post': post, 'comment_form': comment_form}
 
     return render(request, 'blog/detail.html', context)
+

@@ -3,7 +3,7 @@
 
 {% block header %}
     <div class='py-3'>
-        <h4>{{ user.username }}'s Profile</h4>
+        <h4>{{ profile_user.username }}'s Profile</h4>
         <hr>
     </div>
 {% endblock header %}
@@ -12,11 +12,11 @@
     <div class='content-section'>
         <div class='row'>
             <div class='col-8'>
-                <img src="{{ user.profile.picture.url }}" class='rounded-circle account-img border' alt="">
+                <img src="{{ profile_user.profile.picture.url }}" class='rounded-circle account-img border' alt="">
             </div>
             <div class='media-body col-4 align-self-center'>
-                <p class='text-secondary'>Username: {{ user.username }}</p>
-                <p class='text-secondary'>Email: {{ user.email }}</p>
+                <p class='text-secondary'>Username: {{ profile_user.username }}</p>
+                <p class='text-secondary'>Email: {{ profile_user.email }}</p>
             </div>
         </div>
         <hr>
@@ -60,6 +60,7 @@
             </div>
         </div>
 
+        {% if user == profile_user %}
         <div class='col'>
             <h5>Update Information</h5>
             <hr>
@@ -72,5 +73,6 @@
                 </form>
             </div>
         </div>
+        {% endif %}   
     </div>
 {% endblock content %}

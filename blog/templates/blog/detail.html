@@ -7,7 +7,7 @@
         {{ post.title }}
         <div class='row'>
             <div class='col'>
-                <small>Posted {{ post.date_posted }} by {{ post.author }}</small>
+                <small>Posted {{ post.date_posted }} by <a href="{% url 'view-profile' post.author.pk %}">{{ post.author }}</a></small>
             </div>
         </div>
     </h5>
