@@ -33,7 +33,7 @@ class Logout(LoginRequiredMixin, LogoutView):
     login_url = 'login'
     redirect_field_name = 'redirect-to'
     template_name = 'blog/logout.html'
-
+    
 @login_required(redirect_field_name=REIDRECT_FIELD_NAME, login_url=LOGIN_URL)
 def view_profile(request, pk):
     profile_user = get_object_or_404(User, pk=pk)
@@ -47,7 +47,6 @@ def view_profile(request, pk):
     profile_update_form = ProfileUpdateForm(instance=request.user.profile)
 
     if request.user == profile_user:
-
         if request.method == 'POST':
             user_update_form = UserUpdateForm(request.POST, instance=request.user)
             profile_update_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)

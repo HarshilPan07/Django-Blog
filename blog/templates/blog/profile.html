@@ -39,7 +39,7 @@
                 {% endfor %}
             </div>
 
-            <div class='justify-content-end'>
+            <div class='d-flex justify-content-end'>
                 <span class='step-links'>
                     {% if page_obj.has_previous %}
                         <a href="?page=1">First</a>
@@ -59,7 +59,8 @@
                 </span>
             </div>
         </div>
-
+    </div>
+    <div class='row d-flex pt-3'>
         {% if user == profile_user %}
         <div class='col'>
             <h5>Update Information</h5>
