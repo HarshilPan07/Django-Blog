@@ -24,15 +24,14 @@
 
 <div>
     <div>
-        <h5>Comments</h5>
-        <hr>
         <form action="#" method="POST">
             {% csrf_token %}
             {{ comment_form | crispy }}
             <button class='btn btn-primary d-flex justify-content-end' type="submit">Add Comment</button>
         </form>
-        <hr>
     </div>
+    <h5 class='pt-3'>Comments</h5>
+    <hr>
     {% if post.comment_set.all %}
         <div class='list-group py-3'>
             <ul class='list-group list-group-flush'>
@@ -40,7 +39,7 @@
                 <li class='list-group-item'>
                     <div>
                         <h5>{{ comment.content}}</h5>
-                        <small>Posted by {{ comment.commenter }}, {{ comment.date_posted }}</small>
+                        <small>Posted by {{ comment.commenter }} | {{ comment.date_posted }}</small>
                     </div>
                 </li>
                 {% endfor %}
@@ -49,7 +48,8 @@
     {% else %}
         <div class='jumbotron m-3'>
             <h3 class='display-4'>Looks like there aren't any comments here!</h3>
-            <div class='border-top pt-3'>
+            <hr>
+            <div>
                 <small class='text-muted'>Click "Add Comment" above to add a new comment.</small>
             </div>
         </div>

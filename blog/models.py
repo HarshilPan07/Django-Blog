@@ -18,7 +18,7 @@ class Post(models.Model):
     content = models.TextField(max_length=2000)
     date_posted = models.DateTimeField(auto_now=timezone.now())
     
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     board = models.ForeignKey(Board, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
@@ -28,7 +28,7 @@ class Post(models.Model):
         return reverse("post", kwargs={"pk": self.pk})
         
 class Comment(models.Model):
-    content = models.TextField("Comment", max_length=500)
+    content = models.CharField("Comment", max_length=500)
     date_posted = models.DateTimeField(auto_now_add=True)
     
     post = models.ForeignKey(Post, on_delete=models.CASCADE)

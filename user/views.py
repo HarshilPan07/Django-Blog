@@ -37,7 +37,7 @@ class Logout(LoginRequiredMixin, LogoutView):
 @login_required(redirect_field_name=REIDRECT_FIELD_NAME, login_url=LOGIN_URL)
 def view_profile(request, pk):
     profile_user = get_object_or_404(User, pk=pk)
-    post_list = get_list_or_404(Post, author=profile_user)
+    post_list = list(Post.objects.filter(author=profile_user))
 
     paginator = Paginator(post_list, 3)
     page_number = request.GET.get('page')

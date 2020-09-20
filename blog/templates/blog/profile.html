@@ -2,21 +2,17 @@
 {% load crispy_forms_tags %}
 
 {% block header %}
-    <hr>
-    <div class='row'>
-        <div class='col-3 align-self-center'>
+    <div class='jumbotron row mt-4'>
+        <div class='col-4'>
             <img src="{{ profile_user.profile.picture.url }}" class='rounded-circle account-img border' alt="">
         </div>
-        <div class='col-8 align-self-center'>
-            <div class='jumbotron'>
-                <h3 class='display-4'>{{ profile_user.username }}'s Profile</h3>
-                <div class='border-top pt-3'>
-                    <small>{{ profile_user.profile.description }}</small>
-                </div>
+        <div class='col-8'>
+            <h3 class='display-4'>{{ profile_user.username }}'s Profile</h3>
+            <div class='border-top border-secondary pt-3'>
+                <small>{{ profile_user.profile.description }}</small>
             </div>
         </div>
     </div>
-    <hr>
 {% endblock header %}
 
 {% block content %}    
@@ -24,6 +20,7 @@
         <div class='card-header'>
             <h5>Posts</h5>
         </div>
+    
         <div class='list-group'>
             {% for post in page_obj %}
             <a href="{% url 'post' post.id %}" class='list-group-item list-group-item-action'>
