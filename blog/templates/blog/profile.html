@@ -3,12 +3,17 @@
 
 {% block header %}
     <hr>
-    <div class='py-3 row'>
-        <div class='col-4'>
+    <div class='row'>
+        <div class='col-3 align-self-center'>
             <img src="{{ profile_user.profile.picture.url }}" class='rounded-circle account-img border' alt="">
         </div>
         <div class='col-8 align-self-center'>
-            <h4>{{ profile_user.username }}'s Profile</h4>
+            <div class='jumbotron'>
+                <h3 class='display-4'>{{ profile_user.username }}'s Profile</h3>
+                <div class='border-top pt-3'>
+                    <small>{{ profile_user.profile.description }}</small>
+                </div>
+            </div>
         </div>
     </div>
     <hr>
@@ -55,7 +60,7 @@
         {% endif %}
     </div>
     
-    <div class='card my-5 d-flex'>
+    <div class='card my-5'>
         {% if user == profile_user %}
             <div class='card-header'>
                 <h5>Update Information</h5>
@@ -65,7 +70,7 @@
                     {% csrf_token %}
                     {{ user_update_form | crispy}}
                     {{ profile_update_form | crispy }}
-                    <button type='submit' class='btn btn-outline-primary'>Update User Information</button>
+                    <button type='submit' class='d-flex justify-content-end btn btn-outline-primary'>Update User Information</button>
                 </form>
             </div>
         {% endif %}   
