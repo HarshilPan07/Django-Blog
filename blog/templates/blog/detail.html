@@ -3,14 +3,14 @@
 
 {% block content %}
 <div class='card m-3'>
-    <h5 class='card-header'>
-        {{ post.title }}
+    <div class='card-header'>
+        <h5>{{ post.title|title }}</h5>
         <div class='row'>
-            <div class='col'>
-                <small>Posted {{ post.date_posted }} by <a href="{% url 'view-profile' post.author.pk %}">{{ post.author }}</a></small>
+            <div class="col">
+                <small>Posted {{ post.date_posted }} by <a href="{% url 'view-profile' post.author.pk %}">{{ post.author}}</a></small>
             </div>
         </div>
-    </h5>
+    </div>
     <div class='card-body'>
         <p>{{ post.content }}</p>
     </div>
@@ -52,10 +52,12 @@
     {% if post.comment_set.all %}
         <div class='list-group py-3'>
             <ul class='list-group list-group-flush'>
-                {% for comment in post.comment_set.all %}
+                {% for comment in post.get_recent_comments %}
                 <li class='list-group-item'>
-                    <div>
-                        <h5>{{ comment.content}}</h5>
+                    <div class='row'>
+                        <small><a href="{% url 'view-profile' comment.commenter.id %}">{{ comment.commenter }}</a> {{ comment.date_posted }}</small>
+                    </div>
+                    <div class='row'>
                         <small>
                             <a href="{% url 'like-comment' post_pk=post.id comment_pk=comment.id %}">
                                 <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-arrow-up-short" fill="#F73009" xmlns="http://www.w3.org/2000/svg">
@@ -69,9 +71,9 @@
                                 </svg>
                             </a> 
                         </small>
-                        <small>Posted by {{ comment.commenter }} | {{ comment.date_posted }}</small>
-                        <!-- <small><a href="{% url 'like-comment' post_pk=post.id comment_pk=comment.id %}">Like: </a>{{ comment.likes.count }}</small>
-                        <small><a href="{% url 'dislike-comment' post_pk=post.id comment_pk=comment.id %}">Dislike: </a>{{ comment.dislikes.count }}</small> -->
+                        <div class='pl-4'>
+                            {{ comment.content}}
+                        </div>
                     </div>
                 </li>
                 {% endfor %}

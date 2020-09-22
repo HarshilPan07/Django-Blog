@@ -31,6 +31,9 @@ class Post(models.Model):
 
     def get_rating(self):
         return self.likes.count() - self.dislikes.count()
+    
+    def get_recent_comments(self):
+        return self.comment_set.all().order_by('-date_posted')
         
 class Comment(models.Model):
     content = models.CharField("Comment", max_length=500)
