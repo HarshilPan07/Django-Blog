@@ -14,11 +14,17 @@
     <div class='card-body'>
         <p>{{ post.content }}</p>
     </div>
-    <div class='card-footer d-flex justify-content-end'>
-            {% if user == post.author %}
+    <div class='card-footer'>
+            <div class='d-flex justify-content-start'>
+                <a href="{% url 'like-post' post.id %}">Like</a>: {{ post.likes.count }}
+                <a href="{% url 'dislike-post' post.id %}">Dislike</a>: {{ post.dislikes.count }}
+            </div>
+            <div class='d-flex justify-content-end'>
+                {% if user == post.author %}
                 <small><a href="{% url 'update-post' post.id %}">Edit Post |</a></small>
                 <small><a href="{% url 'delete-post' post.id %}">| Delete Post</a></small>
-            {% endif %}
+                {% endif %}
+            </div>
     </div>
 </div>
 
@@ -40,6 +46,8 @@
                     <div>
                         <h5>{{ comment.content}}</h5>
                         <small>Posted by {{ comment.commenter }} | {{ comment.date_posted }}</small>
+                        <small><a href="{% url 'like-comment' post_pk=post.id comment_pk=comment.id %}">Like: </a>{{ comment.likes.count }}</small>
+                        <small><a href="{% url 'dislike-comment' post_pk=post.id comment_pk=comment.id %}">Dislike: </a>{{ comment.dislikes.count }}</small>
                     </div>
                 </li>
                 {% endfor %}

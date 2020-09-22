@@ -19,8 +19,12 @@
                 <div>
                     <h5>{{ post.title }}</h5>
                 </div>
-                <div>
-                    <small>posted {{post.date_posted}} by {{ post.author }}</small>
+                <div class='row'>
+                    <small class='col align-self-start'>posted {{post.date_posted}} by {{ post.author }}</small>
+                </div>
+                <div class='row'>
+                    <small class='col align-self-end'>Likes {{ post.likes.count }} | Dislikes {{ post.dislikes.count }}</small>
+                    <small class='col align-self-end'>Comments: {{ post.comment_set.count }}</small>
                 </div>
             </a>
             {% endfor %}
