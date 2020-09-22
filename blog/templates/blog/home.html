@@ -15,18 +15,42 @@
     {% if posts %} 
     <div class='list-group py-3'>
         {% for post in page_obj %}
-        <a href="{% url 'post' post.id %}" class='list-group-item list-group-item-action'>
-            <div>
-                <h5>{{ post.title }}</h5>
+        <div class='d-flex bd-highlight'>
+            <div class='px-2 flex-shrink-1 bd-highlight'>
+                <div class='d-flex justify-content-center'>
+                    <a href="{% url 'like-post' post.id %}">
+                        <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-arrow-up-short" fill="#F73009" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class='d-flex justify-content-center'>
+                    {{ post.get_rating }}
+                </div>
+                <div class='d-flex justify-content-center'>
+                    <a href="{% url 'dislike-post' post.id %}"> 
+                        <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-arrow-down-short" fill="#8283F6" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
+                        </svg>
+                    </a> 
+                </div>
             </div>
-            <div class='row'>
-                <small class='col align-self-start'>posted {{ post.date_posted }} by {{ post.author }} to {{ post.board }}</small>
+            <div class='px-2 py-1 w-100 bd-highlight'>
+                <a href="{% url 'post' post.id %}" class='list-group-item list-group-item-action'>
+                    <div class='row'>
+                        <div class='col'>
+                            <h5>{{ post.title }}</h5>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <small class='col align-self-start'>posted {{ post.date_posted }} by {{ post.author }} to {{ post.board }}</small>
+                    </div>
+                    <div class='row'>
+                        <small class='col'>Comments: {{ post.comment_set.count }}</small>
+                    </div>
+                </a>
             </div>
-            <div class='row'>
-                <small class='col align-self-end'>Likes {{ post.likes.count }} | Dislikes {{ post.dislikes.count }}</small>
-                <small class='col align-self-end'>Comments: {{ post.comment_set.count }}</small>
-            </div>
-        </a>
+        </div>
         {% endfor %}
     </div>
 

@@ -15,14 +15,16 @@
     {% if boards %}
         <div class='list-group py-3'>
             {% for board in boards %}
-            <a href="{% url 'board-detail-list' board.id %}" class='list-group-item list-group-item-action'>
-                <div>
-                    <h5>{{ board.title }}</h5>
+                <div class='py-1'>
+                    <a href="{% url 'board-detail-list' board.id %}" class='list-group-item list-group-item-action'>
+                        <div>
+                            <h5>{{ board.title }}</h5>
+                        </div>
+                        <div>
+                            <small>{{ board.description }}</small>
+                        </div>
+                    </a>
                 </div>
-                <div>
-                    <small>{{ board.description }}</small>
-                </div>
-            </a>
             {% endfor %}
         </div>
     {% else %}
