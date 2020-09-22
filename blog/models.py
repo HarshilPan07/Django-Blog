@@ -28,6 +28,9 @@ class Post(models.Model):
     
     def get_absolute_url(self):
         return reverse("post", kwargs={"pk": self.pk})
+
+    def get_rating(self):
+        return self.likes.count() - self.dislikes.count()
         
 class Comment(models.Model):
     content = models.CharField("Comment", max_length=500)
