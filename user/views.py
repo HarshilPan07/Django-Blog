@@ -43,6 +43,10 @@ def view_profile(request, pk):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
+    comment_paginator = Paginator(profile_user.comment_set.all(), 3)
+    comment_page_number = request.GET.get('page')
+    comment_page_obj = comment_paginator.get_page(comment_page_number)
+
     posts_liked_list = profile_user.post_likes.all()
     comments_liked_list = profile_user.comment_likes.all()
     
@@ -60,6 +64,12 @@ def view_profile(request, pk):
 
                 return redirect('view-profile', pk=pk)
     
-    context = {'user_update_form': user_update_form, 'profile_update_form': profile_update_form, 'page_obj': page_obj, 'profile_user': profile_user}
+    context = {
+        'user_update_form': user_update_form, 
+        'profile_update_form': profile_update_form, 
+        'profile_user': profile_user,
+        'page_obj': page_obj, 
+        'comment_page_obj': comment_page_obj, 
+        }
 
     return render(request, 'blog/profile.html', context)

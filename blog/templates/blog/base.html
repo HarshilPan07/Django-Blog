@@ -12,7 +12,6 @@
       body {
         background-color: #ffffffee;
       }
-      
     </style>
 
     <title>Blog</title>
@@ -62,8 +61,11 @@
     <div class='container'>
       {% block header %}
       {% endblock header%}
+      
+      {% block profile-navbar %}
+      {% endblock profile-navbar %}
     </div>
-
+    
     <main>
       <div class='container-md'>
           {% block content %}
