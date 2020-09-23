@@ -13,6 +13,11 @@ LOGIN_URL = 'login'
 REIDRECT_FIELD_NAME = 'redirect-to'
 
 def register(request):
+    """
+    Uses CreateUserForm(), fields=(username, email, password1, password2)
+    Checks if valid and saves form if POST, sends empty else 
+    """
+
     if request.method == 'POST':
         register_form = CreateUserForm(request.POST)
 
@@ -36,6 +41,14 @@ class Logout(LoginRequiredMixin, LogoutView):
     
 @login_required(redirect_field_name=REIDRECT_FIELD_NAME, login_url=LOGIN_URL)
 def view_profile(request, pk):
+    """
+    Uses UserUpdateForm(), fields=(username, email) and ProfileUpdateForm(), fields=(description, picture)
+    Gets User instance of profile's user using pk
+    Gets list of Post, comment, and posts_liked objects using User instance
+    Validates and saves UserUpdateForm and ProfileUpdateForm if POST request, passes empty else
+    Renders object lists and forms to profile.html with above data
+    """
+    
     profile_user = get_object_or_404(User, pk=pk)
     
     post_list = list(Post.objects.filter(author=profile_user))
