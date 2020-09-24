@@ -127,6 +127,7 @@ def profile_likes(request, pk):
 
     return render(request, 'blog/profile_likes.html', context)
 
+@login_required(redirect_field_name=REIDRECT_FIELD_NAME, login_url=LOGIN_URL)
 def profile_dislikes(request, pk):
     """
     Gets list of dislikes from request.user and renders to profile.html
