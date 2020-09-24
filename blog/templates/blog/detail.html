@@ -7,7 +7,7 @@
         <h5>{{ post.title|title }}</h5>
         <div class='row'>
             <div class="col">
-                <small>Posted {{ post.date_posted }} by <a href="{% url 'view-profile' post.author.pk %}">{{ post.author}}</a></small>
+                <small>Posted {{ post.date_posted }} by <a href="{% url 'view-profile' post.author.pk %}">{{ post.author}}</a> to <a href="{% url 'board-detail-list' post.board.pk %}">{{ post.board }}</a></small>
             </div>
         </div>
     </div>

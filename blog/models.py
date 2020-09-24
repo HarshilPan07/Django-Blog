@@ -6,6 +6,8 @@ from django.utils import timezone
 class Board(models.Model):
     title = models.CharField(max_length=200, unique=True)
     description = models.TextField(max_length=2000)
+    
+    subscription = models.ManyToManyField(User, blank=True, related_name='subs')
 
     def __str__(self):
         return self.title

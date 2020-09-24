@@ -3,28 +3,22 @@
 {% block header %}
     <div class='row py-3 border-bottom'>
         <div class='mr-auto'>
-            <h4>All Boards</h4>
-        </div>
-        <div>
-            <a href="{% url 'create-board' %}" role='button' class='btn btn-outline-primary'>Create Board</a>
+            <h4>Your Subscriptions</h4>
         </div>
     </div>
 {% endblock header %}
 
 {% block content %}
-    {% if boards %}
+    {% if subbed_boards %}
         <div class='list-group py-3'>
-            {% for board in boards %}
+            {% for board in subbed_boards %}
                 <div class='py-1'>
-                    <a href="{% url 'board-detail-list' board.id %}" class='list-group-item list-group-item-action'>
+                    <a href="{% url 'board-detail-list' board.pk %}" class='list-group-item list-group-item-action'>
                         <div>
                             <h5>{{ board.title }}</h5>
                         </div>
                         <div>
                             <small>{{ board.description }}</small>
-                        </div>
-                        <div>
-                          <small>{{ board.subscription.count }} members</small>  
                         </div>
                     </a>
                 </div>
@@ -34,7 +28,7 @@
         <div class='jumbotron m-3'>
             <h3 class='display-4'>Looks like there aren't any boards here!</h3>
             <div class='border-top pt-3'>
-                <small class='text-muted'>Click "Create Board" above to create a new board.</small>
+                <small class='text-muted'>To subscribe to a board, click the "Subscribe" button next to the board.</small>
             </div>
         </div>
     {% endif %}

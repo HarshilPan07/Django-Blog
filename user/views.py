@@ -142,3 +142,13 @@ def update_information(request, pk):
     }
 
     return render(request, 'blog/profile_update_info.html', context)
+
+@login_required(redirect_field_name=REIDRECT_FIELD_NAME, login_url=LOGIN_URL)
+def user_subscriptions(request):
+    subbed_boards = request.user.subs.all()
+
+    context = {
+        'subbed_boards': subbed_boards
+    }
+    return render(request, 'blog/subscriptions.html', context)
+

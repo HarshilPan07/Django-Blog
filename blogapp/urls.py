@@ -26,7 +26,8 @@ from user.views import (
         update_information, 
         profile_comments, 
         profile_likes, 
-        profile_dislikes
+        profile_dislikes,
+        user_subscriptions
     )
 
 urlpatterns = [
@@ -37,6 +38,7 @@ urlpatterns = [
     path('profile/<int:pk>/likes/', profile_likes, name='profile-likes'),
     path('profile/<int:pk>/dislikes/', profile_dislikes, name='profile-dislikes'),
     path('profile/<int:pk>/update_information/', update_information, name='update-information'),
+    path('subscriptions/', user_subscriptions, name='user-subscriptions'),
     path('register/', register, name='register'),
     path('login/', Login.as_view(), name='login'),
     path('logout/', Logout.as_view(), name='logout'),

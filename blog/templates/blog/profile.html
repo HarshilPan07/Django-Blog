@@ -45,7 +45,7 @@
                     {% else %}
                         <small><strong>{{ post.get_rating }} points</strong></small>
                     {% endif %}
-                    <small>posted {{post.date_posted}}</small>
+                    <small>posted {{post.date_posted}} to {{ post.board }}</small>
                 </div>
             </a>
             {% endfor %}
