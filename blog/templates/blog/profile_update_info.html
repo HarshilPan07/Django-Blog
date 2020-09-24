@@ -1,0 +1,32 @@
+{% extends 'blog/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block header %}
+    <div class='jumbotron row mt-4'>
+        <div class='col-4'>
+            <img src="{{ user.profile.picture.url }}" class='rounded-circle account-img border' alt="">
+        </div>
+        <div class='col-8'>
+            <h3 class='display-4'>{{ user.username }}'s Profile</h3>
+            <div class='border-top border-secondary pt-3'>
+                <small>{{ user.profile.description }}</small>
+            </div>
+        </div>
+    </div>
+{% endblock header %}
+
+{% block content %}    
+    <div>
+            <div class='card-header'>
+                <h5>Update Information</h5>
+            </div>
+            <div class='card-body form-group'>
+                <form action="" method='POST' enctype='multipart/form-data'>
+                    {% csrf_token %}
+                    {{ user_update_form | crispy}}
+                    {{ profile_update_form | crispy }}
+                    <button type='submit' class='d-flex justify-content-end btn btn-outline-primary'>Update User Information</button>
+                </form>
+            </div>
+    </div>
+{% endblock content %}

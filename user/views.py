@@ -45,8 +45,6 @@ def view_profile(request, pk):
     Uses UserUpdateForm(), fields=(username, email) and ProfileUpdateForm(), fields=(description, picture)
     Gets User instance of profile's user using pk
     Gets list of Post, comment, and posts_liked objects using User instance
-    Validates and saves UserUpdateForm and ProfileUpdateForm if POST request, passes empty else
-    Renders object lists and forms to profile.html with above data
     """
     
     profile_user = get_object_or_404(User, pk=pk)
@@ -65,24 +63,38 @@ def view_profile(request, pk):
     
     user_update_form = UserUpdateForm(instance=request.user)
     profile_update_form = ProfileUpdateForm(instance=request.user.profile)
-
-    if request.user == profile_user:
-        if request.method == 'POST':
-            user_update_form = UserUpdateForm(request.POST, instance=request.user)
-            profile_update_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
-
-            if user_update_form.is_valid() and profile_update_form.is_valid():
-                user_update_form.save()
-                profile_update_form.save()
-
-                return redirect('view-profile', pk=pk)
-    
+ 
     context = {
-        'user_update_form': user_update_form, 
-        'profile_update_form': profile_update_form, 
         'profile_user': profile_user,
         'page_obj': page_obj, 
         'comment_page_obj': comment_page_obj, 
         }
 
     return render(request, 'blog/profile.html', context)
+
+def update_information(request, pk):
+    """
+    Uses UserUpdateForm(), fields=(username, email) and ProfileUpdateForm(), fields=(description, picture)
+    Validates and saves UserUpdateForm and ProfileUpdateForm if POST request, passes empty else
+    Renders object lists and forms to profile.html with above data
+    """
+    
+    user_update_form = UserUpdateForm(instance=request.user)
+    profile_update_form = ProfileUpdateForm(instance=request.user.profile)
+
+    if request.method == 'POST':
+        user_update_form = UserUpdateForm(request.POST, instance=request.user)
+        profile_update_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+
+        if user_update_form.is_valid() and profile_update_form.is_valid():
+            user_update_form.save()
+            profile_update_form.save()
+        
+            return redirect('view-profile', pk=pk)
+        
+    context = {
+        'user_update_form': user_update_form, 
+        'profile_update_form': profile_update_form, 
+        }
+
+    return render(request, 'blog/profile_update_info.html', context)
