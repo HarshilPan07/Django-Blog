@@ -70,7 +70,6 @@ class DeletePostView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             return True
         return False
 
-@login_required(redirect_field_name='redirect-to', login_url='login')
 def post_view(request, pk):
     """
     Uses CommentForm(), fields=['content']
