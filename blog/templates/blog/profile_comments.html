@@ -38,7 +38,13 @@
                         {{ comment.content }}
                     </div>
                     <div>
-                        <small><strong>{{ comment.get_rating }} points</strong></small>
+                        {% if comment in user.comment_likes.all %}
+                            <small><strong style="color: #F73009;">{{ comment.get_rating }} points</strong></small>
+                        {% elif comment in user.comment_dislikes.all %}
+                            <small><strong style="color: #8283F6;">{{ comment.get_rating }} points</strong> </small>
+                        {% else %}
+                            <small><strong>{{ comment.get_rating }} points</strong></small>
+                        {% endif %}
                         <small>posted {{ comment.date_posted}}</small>
                     </div>
                 </a>

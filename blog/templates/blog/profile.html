@@ -38,7 +38,13 @@
                     {{ post.title }}
                 </div>
                 <div>
-                    <small><strong>{{ post.likes.count }} points</strong></small>
+                    {% if post in user.post_likes.all %}
+                        <small><strong style="color: #F73009;">{{ post.get_rating }} points</strong></small>
+                    {% elif post in user.post_dislikes.all %}
+                        <small><strong style="color: #8283F6;">{{ post.get_rating }} points</strong> </small>
+                    {% else %}
+                        <small><strong>{{ post.get_rating }} points</strong></small>
+                    {% endif %}
                     <small>posted {{post.date_posted}}</small>
                 </div>
             </a>

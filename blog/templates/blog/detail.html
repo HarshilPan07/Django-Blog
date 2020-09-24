@@ -22,7 +22,13 @@
                     <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
                     </svg>
                 </a>
-                {{ post.get_rating }}
+                {% if post in user.post_likes.all %}
+                    <strong style="color: #F73009;">{{ post.get_rating }}</strong>
+                {% elif post in user.post_dislikes.all %}
+                    <strong style="color: #8283F6;">{{ post.get_rating }}</strong>    
+                {% else %}
+                    <strong>{{ post.get_rating }}</strong>
+                {% endif %}
                 <a href="{% url 'dislike-post' post.id %}"> 
                     <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-arrow-down-short" fill="#8283F6" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
@@ -64,7 +70,13 @@
                                 <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
                                 </svg>
                             </a>
-                            {{ comment.get_rating }}
+                            {% if comment in user.comment_likes.all %}
+                                <strong style="color: #F73009;">{{ comment.get_rating }}</strong>
+                            {% elif comment in user.comment_dislikes.all %}
+                                <strong style="color: #8283F6;">{{ comment.get_rating }}</strong>    
+                            {% else %}
+                                <strong>{{ comment.get_rating }}</strong>
+                            {% endif %}
                             <a href="{% url 'dislike-comment' post_pk=post.id comment_pk=comment.id %}"> 
                                 <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-arrow-down-short" fill="#8283F6" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>

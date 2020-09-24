@@ -25,7 +25,13 @@
                     </a>
                 </div>
                 <div class='d-flex justify-content-center'>
-                    {{ post.get_rating }}
+                    {% if post in user.post_likes.all %}
+                        <strong style="color: #F73009;">{{ post.get_rating }}</strong>
+                    {% elif post in user.post_dislikes.all %}
+                        <strong style="color: #8283F6;">{{ post.get_rating }}</strong>    
+                    {% else %}
+                        <strong>{{ post.get_rating }}</strong>
+                    {% endif %}
                 </div>
                 <div class='d-flex justify-content-center'>
                     <a href="{% url 'dislike-post' post.id %}"> 
