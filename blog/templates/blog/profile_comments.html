@@ -19,8 +19,8 @@
         <a class="nav-link" href="{% url 'view-profile' profile_user.pk %}">Posts</a>
         <a class="nav-link active" href="{% url 'profile-comments' profile_user.pk %}">Comments</a>
         {% if user == profile_user %}
-            <a class="nav-link" href="{% url 'profile-likes' user.pk %}">Likes</a>
-            <a class="nav-link" href="{% url 'profile-dislikes' user.pk%}">Dislikes</a>
+            <a class="nav-link" href="{% url 'profile-likes' %}">Likes</a>
+            <a class="nav-link" href="{% url 'profile-dislikes' %}">Dislikes</a>
         {% endif %}
       </nav>
 {% endblock profile-navbar %}

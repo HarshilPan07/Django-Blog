@@ -39,7 +39,7 @@
                       <a href="#" class='nav-link dropdown-toggle' id='navbarDropdownMenuLink' role='button' data-toggle='dropdown'>{{ user.username }}</a>
                       <div class='dropdown-menu'>
                         <a href="{% url 'view-profile' user.pk %}" class='dropdown-item'>Profile</a>
-                        <a href="{% url 'update-information' user.pk %}" class='dropdown-item'>Update Profile</a>
+                        <a href="{% url 'update-information' %}" class='dropdown-item'>Update Profile</a>
                       </div>
                     </li>
                     <li class='navbar-item'>

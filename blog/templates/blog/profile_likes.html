@@ -18,8 +18,8 @@
     <nav class="nav nav-pills border nav-fill my-4">
         <a class="nav-link" href="{% url 'view-profile' user.pk %}">Posts</a>
         <a class="nav-link" href="{% url 'profile-comments' user.pk %}">Comments</a>
-        <a class="nav-link active" href="{% url 'profile-likes' user.pk %}">Likes</a>
-        <a class="nav-link" href="{% url 'profile-dislikes' user.pk %}">Dislikes</a>
+        <a class="nav-link active" href="{% url 'profile-likes' %}">Likes</a>
+        <a class="nav-link" href="{% url 'profile-dislikes' %}">Dislikes</a>
       </nav>
 {% endblock profile-navbar %}
 

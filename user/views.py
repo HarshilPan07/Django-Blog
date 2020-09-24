@@ -84,7 +84,7 @@ def profile_comments(request, pk):
     return render(request, 'blog/profile_comments.html', context)
 
 @login_required(redirect_field_name=REIDRECT_FIELD_NAME, login_url=LOGIN_URL)
-def profile_likes(request, pk):
+def profile_likes(request):
     """
     Gets list of likes from request.user and renders to profile.html
     """
@@ -100,7 +100,7 @@ def profile_likes(request, pk):
     return render(request, 'blog/profile_likes.html', context)
 
 @login_required(redirect_field_name=REIDRECT_FIELD_NAME, login_url=LOGIN_URL)
-def profile_dislikes(request, pk):
+def profile_dislikes(request):
     """
     Gets list of dislikes from request.user and renders to profile.html
     """
@@ -116,7 +116,7 @@ def profile_dislikes(request, pk):
     return render(request, 'blog/profile_dislikes.html', context)
 
 @login_required(redirect_field_name=REIDRECT_FIELD_NAME, login_url=LOGIN_URL)
-def update_information(request, pk):
+def update_information(request):
     """
     Uses UserUpdateForm(), fields=(username, email) and ProfileUpdateForm(), fields=(description, picture)
     Validates and saves UserUpdateForm and ProfileUpdateForm if POST request, passes empty else
@@ -134,7 +134,7 @@ def update_information(request, pk):
             user_update_form.save()
             profile_update_form.save()
         
-            return redirect('view-profile', pk=pk)
+            return redirect('view-profile', pk=request.user.pk)
         
     context = {
         'user_update_form': user_update_form, 
