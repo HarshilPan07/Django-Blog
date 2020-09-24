@@ -48,7 +48,7 @@ def view_profile(request, pk):
     
     profile_user = get_object_or_404(User, pk=pk)
     
-    post_list = list(Post.objects.filter(author=profile_user))
+    post_list = list(Post.objects.filter(author=profile_user).order_by('-date_posted'))
     paginator = Paginator(post_list, 4)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -62,34 +62,6 @@ def view_profile(request, pk):
         }
 
     return render(request, 'blog/profile.html', context)
-
-@login_required(redirect_field_name=REIDRECT_FIELD_NAME, login_url=LOGIN_URL)
-def update_information(request, pk):
-    """
-    Uses UserUpdateForm(), fields=(username, email) and ProfileUpdateForm(), fields=(description, picture)
-    Validates and saves UserUpdateForm and ProfileUpdateForm if POST request, passes empty else
-    Renders object lists and forms to profile.html with above data
-    """
-    
-    user_update_form = UserUpdateForm(instance=request.user)
-    profile_update_form = ProfileUpdateForm(instance=request.user.profile)
-
-    if request.method == 'POST':
-        user_update_form = UserUpdateForm(request.POST, instance=request.user)
-        profile_update_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
-
-        if user_update_form.is_valid() and profile_update_form.is_valid():
-            user_update_form.save()
-            profile_update_form.save()
-        
-            return redirect('view-profile', pk=pk)
-        
-    context = {
-        'user_update_form': user_update_form, 
-        'profile_update_form': profile_update_form, 
-    }
-
-    return render(request, 'blog/profile_update_info.html', context)
 
 @login_required(redirect_field_name=REIDRECT_FIELD_NAME, login_url=LOGIN_URL)
 def profile_comments(request, pk):
@@ -142,3 +114,31 @@ def profile_dislikes(request, pk):
     }
 
     return render(request, 'blog/profile_dislikes.html', context)
+
+@login_required(redirect_field_name=REIDRECT_FIELD_NAME, login_url=LOGIN_URL)
+def update_information(request, pk):
+    """
+    Uses UserUpdateForm(), fields=(username, email) and ProfileUpdateForm(), fields=(description, picture)
+    Validates and saves UserUpdateForm and ProfileUpdateForm if POST request, passes empty else
+    Renders object lists and forms to profile.html with above data
+    """
+    
+    user_update_form = UserUpdateForm(instance=request.user)
+    profile_update_form = ProfileUpdateForm(instance=request.user.profile)
+
+    if request.method == 'POST':
+        user_update_form = UserUpdateForm(request.POST, instance=request.user)
+        profile_update_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+
+        if user_update_form.is_valid() and profile_update_form.is_valid():
+            user_update_form.save()
+            profile_update_form.save()
+        
+            return redirect('view-profile', pk=pk)
+        
+    context = {
+        'user_update_form': user_update_form, 
+        'profile_update_form': profile_update_form, 
+    }
+
+    return render(request, 'blog/profile_update_info.html', context)

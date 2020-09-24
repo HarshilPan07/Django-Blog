@@ -26,7 +26,6 @@
 {% endblock profile-navbar %}
 
 {% block content %}    
-
     <div class='card my-4'>
         <div class='col card-header'>
             <h5>Comments</h5>
@@ -39,7 +38,7 @@
                         {{ comment.content }}
                     </div>
                     <div>
-                        <small> {{ comment.likes.count }}</small>
+                        <small><strong>{{ comment.get_rating }} points</strong></small>
                         <small>posted {{ comment.date_posted}}</small>
                     </div>
                 </a>
@@ -48,6 +47,7 @@
                 <p class='d-flex pt-2 justify-content-center'>No Comments</p>
             {% endif %}
         </div>
+
         {% if page_obj.paginator.num_pages > 1 %}
             <div class='card-footer d-flex justify-content-end'>
                 <span class='step-links'>

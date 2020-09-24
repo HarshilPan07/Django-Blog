@@ -30,6 +30,7 @@
         <div class='card-header'>
             <h5>Posts</h5>
         </div>
+
         <div class='list-group'>
             {% for post in page_obj %}
             <a href="{% url 'post' post.id %}" class='list-group-item list-group-item-action'>
@@ -37,11 +38,13 @@
                     {{ post.title }}
                 </div>
                 <div>
-                    <small>posted {{post.date_posted}} by {{ post.author }}</small>
+                    <small><strong>{{ post.likes.count }} points</strong></small>
+                    <small>posted {{post.date_posted}}</small>
                 </div>
             </a>
             {% endfor %}
         </div>
+
         {% if page_obj.paginator.num_pages > 1%}
             <div class='card-footer d-flex justify-content-end'>
                 <span class='step-links'>
@@ -61,32 +64,6 @@
                         <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
                     {% endif %}
                 </span>
-            </div>
-        {% endif %}
-    </div>
-    
-    <div>
-        {% if user == profile_user %}
-            <div class='card my-5'>
-                <div class='col card-header'>
-                    <h5>Comments Liked</h5>
-                </div>
-                <div class='list-group'>
-                    {% if profile_user.comment_likes.all %}
-                        {% for comment in profile_user.comment_likes.all %}
-                        <a href="{% url 'post' comment.post.id %}" class='list-group-item list-group-item-action'>
-                            <div>
-                                {{ comment.content }}
-                            </div>
-                            <div>
-                                <small>posted {{comment.date_posted}} by {{ comment.commenter }}</small>
-                            </div>
-                        </a>
-                        {% endfor %}
-                    {% else %}
-                        <p class='d-flex pt-2 justify-content-center'>No Comments Liked</p>
-                    {% endif %}
-                </div>
             </div>
         {% endif %}
     </div>
