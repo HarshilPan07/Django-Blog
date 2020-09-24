@@ -1,0 +1,73 @@
+{% extends 'blog/base.html' %}
+
+{% block header %}
+    <div class='jumbotron row mt-4'>
+        <div class='col-4'>
+            <img src="{{ profile_user.profile.picture.url }}" class='rounded-circle account-img border' alt="">
+        </div>
+        <div class='col-8'>
+            <h3 class='display-4'>{{ profile_user.username }}'s Profile</h3>
+            <div class='border-top border-secondary pt-3'>
+                <small>{{ profile_user.profile.description }}</small>
+            </div>
+        </div>
+    </div>
+{% endblock header %}
+
+{% block profile-navbar %}
+    <nav class="nav nav-pills border nav-fill my-4">
+        <a class="nav-link" href="{% url 'view-profile' profile_user.pk %}">Posts</a>
+        <a class="nav-link active" href="{% url 'profile-comments' profile_user.pk %}">Comments</a>
+        {% if user == profile_user %}
+            <a class="nav-link" href="{% url 'profile-likes' user.pk %}">Likes</a>
+            <a class="nav-link" href="{% url 'profile-dislikes' user.pk%}">Dislikes</a>
+        {% endif %}
+      </nav>
+{% endblock profile-navbar %}
+
+{% block content %}    
+
+    <div class='card my-4'>
+        <div class='col card-header'>
+            <h5>Comments</h5>
+        </div>
+        <div class='list-group'>
+            {% if profile_user.comment_set.all %}
+                {% for comment in page_obj %}
+                <a href="{% url 'post' comment.post.id %}" class='list-group-item list-group-item-action'>
+                    <div>
+                        {{ comment.content }}
+                    </div>
+                    <div>
+                        <small> {{ comment.likes.count }}</small>
+                        <small>posted {{ comment.date_posted}}</small>
+                    </div>
+                </a>
+                {% endfor %}
+            {% else %}
+                <p class='d-flex pt-2 justify-content-center'>No Comments</p>
+            {% endif %}
+        </div>
+        {% if page_obj.paginator.num_pages > 1 %}
+            <div class='card-footer d-flex justify-content-end'>
+                <span class='step-links'>
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1">First</a>
+                        |
+                        <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    {% endif%}
+        
+                    <span class='current'>
+                        [Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}]
+                    </span>
+                    
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">Next</a>
+                        |
+                        <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                    {% endif %}
+                </span>
+            </div>
+        {% endif %}
+    </div>
+{% endblock content %}

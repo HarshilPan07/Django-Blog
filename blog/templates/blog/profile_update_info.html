@@ -20,7 +20,7 @@
             <div class='card-header'>
                 <h5>Update Information</h5>
             </div>
-            <div class='card-body form-group'>
+            <div class='card-body border form-group'>
                 <form action="" method='POST' enctype='multipart/form-data'>
                     {% csrf_token %}
                     {{ user_update_form | crispy}}

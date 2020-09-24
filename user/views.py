@@ -42,36 +42,28 @@ class Logout(LoginRequiredMixin, LogoutView):
 @login_required(redirect_field_name=REIDRECT_FIELD_NAME, login_url=LOGIN_URL)
 def view_profile(request, pk):
     """
-    Uses UserUpdateForm(), fields=(username, email) and ProfileUpdateForm(), fields=(description, picture)
     Gets User instance of profile's user using pk
-    Gets list of Post, comment, and posts_liked objects using User instance
+    Gets list of Post objects and renders to profile.html
     """
     
     profile_user = get_object_or_404(User, pk=pk)
     
     post_list = list(Post.objects.filter(author=profile_user))
-    paginator = Paginator(post_list, 3)
+    paginator = Paginator(post_list, 4)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    comment_paginator = Paginator(profile_user.comment_set.all(), 3)
-    comment_page_number = request.GET.get('page')
-    comment_page_obj = comment_paginator.get_page(comment_page_number)
-
     posts_liked_list = profile_user.post_likes.all()
     comments_liked_list = profile_user.comment_likes.all()
-    
-    user_update_form = UserUpdateForm(instance=request.user)
-    profile_update_form = ProfileUpdateForm(instance=request.user.profile)
  
     context = {
         'profile_user': profile_user,
         'page_obj': page_obj, 
-        'comment_page_obj': comment_page_obj, 
         }
 
     return render(request, 'blog/profile.html', context)
 
+@login_required(redirect_field_name=REIDRECT_FIELD_NAME, login_url=LOGIN_URL)
 def update_information(request, pk):
     """
     Uses UserUpdateForm(), fields=(username, email) and ProfileUpdateForm(), fields=(description, picture)
@@ -95,6 +87,57 @@ def update_information(request, pk):
     context = {
         'user_update_form': user_update_form, 
         'profile_update_form': profile_update_form, 
-        }
+    }
 
     return render(request, 'blog/profile_update_info.html', context)
+
+@login_required(redirect_field_name=REIDRECT_FIELD_NAME, login_url=LOGIN_URL)
+def profile_comments(request, pk):
+    """
+    Gets User instance of profile's user using pk
+    Gets list of Comment objects and renders to profile.html
+    """
+
+    profile_user = get_object_or_404(User, pk=pk)
+
+    paginator = Paginator(profile_user.comment_set.all(), 4)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'profile_user': profile_user,
+        'page_obj': page_obj
+    }
+
+    return render(request, 'blog/profile_comments.html', context)
+
+@login_required(redirect_field_name=REIDRECT_FIELD_NAME, login_url=LOGIN_URL)
+def profile_likes(request, pk):
+    """
+    Gets list of likes from request.user and renders to profile.html
+    """
+
+    paginator = Paginator(request.user.post_likes.all(), 4)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'page_obj': page_obj
+    }
+
+    return render(request, 'blog/profile_likes.html', context)
+
+def profile_dislikes(request, pk):
+    """
+    Gets list of dislikes from request.user and renders to profile.html
+    """
+
+    paginator = Paginator(request.user.post_dislikes.all(), 4)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'page_obj': page_obj
+    }
+
+    return render(request, 'blog/profile_dislikes.html', context)

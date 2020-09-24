@@ -18,12 +18,24 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 
-from user.views import Login, Logout, register, view_profile, update_information
+from user.views import (
+        Login, 
+        Logout,
+        register, 
+        view_profile, 
+        update_information, 
+        profile_comments, 
+        profile_likes, 
+        profile_dislikes
+    )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('blog.urls')),
     path('profile/<int:pk>/', view_profile, name='view-profile'),
+    path('profile/<int:pk>/comments/', profile_comments, name='profile-comments'),
+    path('profile/<int:pk>/likes/', profile_likes, name='profile-likes'),
+    path('profile/<int:pk>/dislikes/', profile_dislikes, name='profile-dislikes'),
     path('profile/<int:pk>/update_information/', update_information, name='update-information'),
     path('register/', register, name='register'),
     path('login/', Login.as_view(), name='login'),

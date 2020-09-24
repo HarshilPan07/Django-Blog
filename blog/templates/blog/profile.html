@@ -1,5 +1,4 @@
 {% extends 'blog/base.html' %}
-{% load crispy_forms_tags %}
 
 {% block header %}
     <div class='jumbotron row mt-4'>
@@ -17,10 +16,12 @@
 
 {% block profile-navbar %}
     <nav class="nav nav-pills border nav-fill my-4">
-        <a class="nav-link active" href="#">Posts</a>
-        <a class="nav-link" href="#">Comments</a>
-        <a class="nav-link" href="#">Likes</a>
-        <a class="nav-link" href="#">Dislikes</a>
+        <a class="nav-link active" href="{% url 'view-profile' profile_user.pk %}">Posts</a>
+        <a class="nav-link" href="{% url 'profile-comments' profile_user.pk %}">Comments</a>
+        {% if user == profile_user %}
+            <a class="nav-link" href="{% url 'profile-likes' user.pk %}">Likes</a>
+            <a class="nav-link" href="{% url 'profile-dislikes' user.pk %}">Dislikes</a>
+        {% endif %}
       </nav>
 {% endblock profile-navbar %}
 
@@ -64,74 +65,8 @@
         {% endif %}
     </div>
     
-    <div class='card my-5'>
-        <div class='col card-header'>
-            <h5>Comments</h5>
-        </div>
-        <div class='list-group'>
-            {% if profile_user.comment_set.all %}
-                {% for comment in comment_page_obj %}
-                <a href="{% url 'post' comment.post.id %}" class='list-group-item list-group-item-action'>
-                    <div>
-                        {{ comment.content }}
-                    </div>
-                    <div>
-                        <small> {{ comment.likes.count }}</small>
-                        <small>posted {{ comment.date_posted}}</small>
-                    </div>
-                </a>
-                {% endfor %}
-            {% else %}
-                <p class='d-flex pt-2 justify-content-center'>No Comments</p>
-            {% endif %}
-        </div>
-        {% if comment_page_obj.paginator.num_pages > 1 %}
-            <div class='card-footer d-flex justify-content-end'>
-                <span class='step-links'>
-                    {% if comment_page_obj.has_previous %}
-                        <a href="?page=1">First</a>
-                        |
-                        <a href="?page={{ comment_page_obj.previous_page_number }}">Previous</a>
-                    {% endif%}
-        
-                    <span class='current'>
-                        [Page {{ comment_page_obj.number }} of {{ comment_page_obj.paginator.num_pages }}]
-                    </span>
-                    
-                    {% if comment_page_obj.has_next %}
-                        <a href="?page={{ comment_page_obj.next_page_number }}">Next</a>
-                        |
-                        <a href="?page={{ comment_page_obj.paginator.num_pages }}">Last</a>
-                    {% endif %}
-                </span>
-            </div>
-        {% endif %}
-    </div>
-
     <div>
         {% if user == profile_user %}
-            <div class='card my-5'>
-                <div class='col card-header'>
-                    <h5>Posts Liked</h5>
-                </div>
-                <div class='list-group'>
-                    {% if profile_user.post_likes.all %}
-                        {% for post in profile_user.post_likes.all %}
-                        <a href="{% url 'post' post.id %}" class='list-group-item list-group-item-action'>
-                            <div>
-                                {{ post.title }}
-                            </div>
-                            <div>
-                                <small>posted {{post.date_posted}} by {{ post.author }}</small>
-                            </div>
-                        </a>
-                        {% endfor %}
-                    {% else %}
-                        <p class='d-flex pt-2 justify-content-center'>No Posts Liked</p>
-                    {% endif %}
-                </div>
-            </div>
-
             <div class='card my-5'>
                 <div class='col card-header'>
                     <h5>Comments Liked</h5>
