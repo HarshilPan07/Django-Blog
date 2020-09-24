@@ -7,6 +7,11 @@
         </div>
         <div>
             <a href="{% url 'create-post' %}" role='button' class='btn btn-outline-primary'>Create Post</a>
+            {% if board in user.subs.all %}
+                <a href="{% url 'unsubscribe' board.id %}" role="button" class="btn btn-primary">Unsubscribe</a>
+            {% else %}
+                <a href="{% url 'subscribe' board.id %}" role="button" class="btn btn-primary">Subscribe</a>
+            {% endif %}
         </div>
     </div>
 {% endblock header %}

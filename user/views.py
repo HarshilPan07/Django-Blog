@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
+from django.shortcuts import render, reverse, redirect, get_object_or_404, get_list_or_404
 from django.core.paginator import Paginator
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 
 from .forms import CreateUserForm, UserUpdateForm, ProfileUpdateForm
 from .models import Profile
-from blog.models import Post
+from blog.models import Board, Post
 
 LOGIN_URL = 'login'
 REIDRECT_FIELD_NAME = 'redirect-to'
@@ -152,3 +152,18 @@ def user_subscriptions(request):
     }
     return render(request, 'blog/subscriptions.html', context)
 
+@login_required(redirect_field_name=REIDRECT_FIELD_NAME, login_url=LOGIN_URL)
+def subscribe(request, pk):
+    board = get_object_or_404(Board, pk=pk)
+
+    board.subscription.add(request.user)
+
+    return redirect(reverse('board-detail-list', args=[board.pk]))
+
+@login_required(redirect_field_name=REIDRECT_FIELD_NAME, login_url=LOGIN_URL)
+def unsubscribe(request, pk):
+    board = get_object_or_404(Board, pk=pk)
+
+    board.subscription.remove(request.user)
+
+    return redirect(reverse('board-detail-list', args=[board.pk]))

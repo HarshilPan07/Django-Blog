@@ -12,14 +12,18 @@ from .views import (
         like_post, 
         dislike_post, 
         like_comment,
-        dislike_comment
+        dislike_comment,
     )
+
+from user.views import subscribe, unsubscribe
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('boards/', BoardsView.as_view(), name='boards'),
     path('boards/<int:pk>/', BoardDetailView.as_view(), name='board-detail-list'),
     path('create-board/', CreateBoardView.as_view(), name='create-board'),
+    path('boards/<int:pk>/subscribe/', subscribe, name='subscribe'),
+    path('boards/<int:pk>/unsubscribe/', unsubscribe, name='unsubscribe'),
     path('post/<int:pk>/', post_view, name='post'),
     path('post/<int:pk>/like/', like_post, name='like-post'),
     path('post/<int:pk>/dislike/', dislike_post, name='dislike-post'),
