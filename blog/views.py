@@ -48,7 +48,7 @@ class UpdatePostView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     form_class = PostForm
     login_url = 'login'
     redirect_field_name = 'redirect-to'
-
+    
     def test_func(self):
         post = self.get_object()
         

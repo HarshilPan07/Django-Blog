@@ -52,9 +52,6 @@ def view_profile(request, pk):
     paginator = Paginator(post_list, 4)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-
-    posts_liked_list = profile_user.post_likes.all()
-    comments_liked_list = profile_user.comment_likes.all()
  
     context = {
         'profile_user': profile_user,

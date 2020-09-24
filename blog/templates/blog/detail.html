@@ -47,11 +47,13 @@
 
 <div>
     <div>
+    {% if user.is_authenticated %}
         <form action="#" method="POST">
             {% csrf_token %}
             {{ comment_form | crispy }}
             <button class='btn btn-primary d-flex justify-content-end' type="submit">Add Comment</button>
         </form>
+    {% endif %}
     </div>
     <h5 class='pt-3'>Comments</h5>
     <hr>
