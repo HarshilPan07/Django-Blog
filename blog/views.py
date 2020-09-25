@@ -13,6 +13,16 @@ class HomeView(ListView):
     ordering = ['-date_posted']
     paginate_by = 5
 
+class Home_Most_Liked_View(ListView):
+    model = Post
+    template_name = 'blog/home.html'
+    context_object_name = 'posts'
+
+    paginate_by = 5
+
+    def get_queryset(self):
+        return sorted(Post.objects.all(), key=lambda obj: -obj.get_rating())
+
 class BoardsView(ListView):
     model = Board
     template_name = 'blog/board_list.html'

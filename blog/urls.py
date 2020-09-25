@@ -2,6 +2,7 @@ from django.urls import path
 
 from .views import (
         HomeView, 
+        Home_Most_Liked_View,
         CreatePostView, 
         UpdatePostView, 
         DeletePostView, 
@@ -19,6 +20,7 @@ from user.views import subscribe, unsubscribe
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
+    path('/top_all/', Home_Most_Liked_View.as_view(), name='top-all-view'),
     path('boards/', BoardsView.as_view(), name='boards'),
     path('boards/<int:pk>/', BoardDetailView.as_view(), name='board-detail-list'),
     path('create-board/', CreateBoardView.as_view(), name='create-board'),

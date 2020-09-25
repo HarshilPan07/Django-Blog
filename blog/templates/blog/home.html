@@ -3,7 +3,12 @@
 {% block header %}
     <div class='row py-3 border-bottom'>
         <div class='mr-auto'>
-            <h4>Recent Posts</h4>
+            {% if request.resolver_match.url_name == 'top-all-view' %}
+                <h4>Top Posts</h4>
+            {% else %}
+                <h4>Recent Posts</h4>
+            {% endif %}
+            
         </div>
         <div>
             <a href="{% url 'create-post' %}" role='button' class='btn btn-outline-primary'>Create Post</a>
