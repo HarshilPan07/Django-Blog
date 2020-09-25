@@ -10,7 +10,7 @@ from .models import Profile
 from blog.models import Board, Post
 
 LOGIN_URL = 'login'
-REIDRECT_FIELD_NAME = 'redirect-to'
+REIDRECT_FIELD_NAME = 'next='
 
 def register(request):
     """
@@ -39,7 +39,6 @@ class Logout(LoginRequiredMixin, LogoutView):
     redirect_field_name = 'redirect-to'
     template_name = 'blog/logout.html'
     
-@login_required(redirect_field_name=REIDRECT_FIELD_NAME, login_url=LOGIN_URL)
 def view_profile(request, pk):
     """
     Gets User instance of profile's user using pk
@@ -60,7 +59,6 @@ def view_profile(request, pk):
 
     return render(request, 'blog/profile.html', context)
 
-@login_required(redirect_field_name=REIDRECT_FIELD_NAME, login_url=LOGIN_URL)
 def profile_comments(request, pk):
     """
     Gets User instance of profile's user using pk

@@ -115,7 +115,7 @@ def like_post(request, pk):
         user.post_dislikes.remove(post)                                             
         user.post_likes.add(post)
 
-    return HttpResponseRedirect(reverse('post', args=[post.id]))
+    return redirect(reverse('post', args=[post.id]))
 
 @login_required(redirect_field_name='redirect-to', login_url='login')
 def dislike_post(request, pk):
@@ -136,7 +136,7 @@ def dislike_post(request, pk):
         user.post_likes.remove(post)                                                
         user.post_dislikes.add(post)
 
-    return HttpResponseRedirect(reverse('post', args=[post.id]))
+    return redirect(reverse('post', args=[post.id]))
 
 @login_required(redirect_field_name='redirect-to', login_url='login')
 def like_comment(request, post_pk, comment_pk):
@@ -158,7 +158,7 @@ def like_comment(request, post_pk, comment_pk):
         user.comment_dislikes.remove(comment)                                                   
         user.comment_likes.add(comment)
 
-    return HttpResponseRedirect(reverse('post', args=[post.id]))
+    return redirect(reverse('post', args=[post.id]))
 
 @login_required(redirect_field_name='redirect-to', login_url='login')
 def dislike_comment(request, post_pk, comment_pk):
@@ -180,4 +180,4 @@ def dislike_comment(request, post_pk, comment_pk):
         user.comment_likes.remove(comment)                                                         
         user.comment_dislikes.add(comment)
 
-    return HttpResponseRedirect(reverse('post', args=[post.id]))
+    return redirect(reverse('post', args=[post.id]))
