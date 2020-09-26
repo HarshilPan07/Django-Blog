@@ -28,7 +28,27 @@
 {% block content %}    
     <div class='card'>    
         <div class='card-header'>
-            <h5>Posts</h5>
+            <span class='row'>
+                <h5 class='col-10 mr-4 align-self-end'>Posts</h5>
+                <button class="col ml-4 btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Sort By
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    {% if request.resolver_match.url_name == 'view-profile' %}
+                        <a class="dropdown-item active" href="{% url 'view-profile' profile_user.pk %}">Recent</a>
+                        <a class="dropdown-item" href="{% url 'profile-top-posts' profile_user.pk %}">Top</a>
+                        <a class="dropdown-item" href="{% url 'profile-controversial-posts' profile_user.pk %}">Controversial</a>
+                    {% elif request.resolver_match.url_name == 'profile-top-posts' %}
+                        <a class="dropdown-item" href="{% url 'view-profile' profile_user.pk %}">Recent</a>
+                        <a class="dropdown-item active" href="{% url 'profile-top-posts' profile_user.pk %}">Top</a>
+                        <a class="dropdown-item" href="{% url 'profile-controversial-posts' profile_user.pk %}">Controversial</a>
+                    {% else %}
+                        <a class="dropdown-item" href="{% url 'view-profile' profile_user.pk %}">Recent</a>
+                        <a class="dropdown-item" href="{% url 'profile-top-posts' profile_user.pk %}">Top</a>
+                        <a class="dropdown-item active" href="{% url 'profile-controversial-posts' profile_user.pk %}">Controversial</a>
+                    {% endif %}
+                </div>
+            </span>
         </div>
 
         <div class='list-group'>

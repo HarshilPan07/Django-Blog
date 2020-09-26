@@ -45,7 +45,37 @@ def view_profile(request, pk):
     context = {
         'profile_user': profile_user,
         'page_obj': page_obj, 
-        }
+    }
+
+    return render(request, 'blog/profile.html', context)
+
+def profile_top_posts(request, pk):
+    profile_user = get_object_or_404(User, pk=pk)
+    
+    post_list = sorted(Post.objects.filter(author=profile_user), key=lambda obj: -obj.get_rating())
+    paginator = Paginator(post_list, 4)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+ 
+    context = {
+        'profile_user': profile_user,
+        'page_obj': page_obj, 
+    }
+
+    return render(request, 'blog/profile.html', context)
+
+def profile_controversial_posts(request, pk):
+    profile_user = get_object_or_404(User, pk=pk)
+    
+    post_list = sorted(Post.objects.filter(author=profile_user), key=lambda obj: obj.get_rating())
+    paginator = Paginator(post_list, 4)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+ 
+    context = {
+        'profile_user': profile_user,
+        'page_obj': page_obj, 
+    }
 
     return render(request, 'blog/profile.html', context)
 
