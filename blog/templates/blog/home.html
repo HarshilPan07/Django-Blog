@@ -3,19 +3,25 @@
 {% block header %}
     <div class='row py-3 border-bottom'>
         <div class='mr-auto'>
-            <div class="dropdown">
-                {% if request.resolver_match.url_name == 'top-all-view' %}
-                    <h5 class='border-bottom'>Top Posts</h5>
-                {% else %}
-                    <h5 class='border-bottom'>Recent Posts</h5>
-                {% endif %}
+            <div class="row dropdown">
+                <h5 class='align-self-end mx-3'>Home</h5>
                 <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Sort By
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="{% url 'home' %}">Recent</a>
-                    <a class="dropdown-item" href="{% url 'home-top-all-view' %}">Top</a>
-                    <a class="dropdown-item" href="#">Controversial</a>
+                    {% if request.resolver_match.url_name == 'home' %}
+                        <a class="dropdown-item active" href="{% url 'home' %}">Recent</a>
+                        <a class="dropdown-item" href="{% url 'home-top-all-view' %}">Top</a>
+                        <a class="dropdown-item" href="#">Controversial</a>
+                    {% elif request.resolver_match.url_name == 'home-top-all-view' %}
+                        <a class="dropdown-item" href="{% url 'home' %}">Recent</a>
+                        <a class="dropdown-item active" href="{% url 'home-top-all-view' %}">Top</a>
+                        <a class="dropdown-item" href="#">Controversial</a>
+                    {% else %}
+                        <a class="dropdown-item" href="{% url 'home' %}">Recent</a>
+                        <a class="dropdown-item" href="{% url 'home-top-all-view' %}">Top</a>
+                        <a class="dropdown-item active" href="#">Controversial</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
