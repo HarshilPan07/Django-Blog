@@ -27,6 +27,8 @@ from user.views import (
         profile_controversial_posts, 
         update_information, 
         profile_comments, 
+        profile_top_comments,
+        profile_controversial_comments,
         profile_likes, 
         profile_dislikes,
         user_subscriptions
@@ -39,6 +41,8 @@ urlpatterns = [
     path('profile/<int:pk>/top_posts/', profile_top_posts, name='profile-top-posts'),
     path('profile/<int:pk>/controversial_posts/', profile_controversial_posts, name='profile-controversial-posts'),
     path('profile/<int:pk>/comments/', profile_comments, name='profile-comments'),
+    path('profile/<int:pk>/comments/top/', profile_top_comments, name='profile-top-comments'),
+    path('profile/<int:pk>/comments/controversial/', profile_controversial_comments, name='profile-controversial-comments'),
     path('profile/likes/', profile_likes, name='profile-likes'),
     path('profile/dislikes/', profile_dislikes, name='profile-dislikes'),
     path('profile/update_information/', update_information, name='update-information'),

@@ -28,7 +28,27 @@
 {% block content %}    
     <div class='card my-4'>
         <div class='col card-header'>
-            <h5>Comments</h5>
+            <span class='row'>
+                <h5 class='col-10 mr-4 align-self-end'>Comments</h5>
+                <button class="col ml-4 btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Sort By
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    {% if request.resolver_match.url_name == 'profile-comments' %}
+                        <a class="dropdown-item active" href="{% url 'profile-comments' profile_user.pk %}">Recent</a>
+                        <a class="dropdown-item" href="{% url 'profile-top-comments' profile_user.pk %}">Top</a>
+                        <a class="dropdown-item" href="{% url 'profile-controversial-comments' profile_user.pk %}">Controversial</a>
+                    {% elif request.resolver_match.url_name == 'profile-top-comments' %}
+                        <a class="dropdown-item" href="{% url 'profile-comments' profile_user.pk %}">Recent</a>
+                        <a class="dropdown-item active" href="{% url 'profile-top-posts' profile_user.pk %}">Top</a>
+                        <a class="dropdown-item" href="{% url 'profile-controversial-comments' profile_user.pk %}">Controversial</a>
+                    {% else %}
+                        <a class="dropdown-item" href="{% url 'profile-comments' profile_user.pk %}">Recent</a>
+                        <a class="dropdown-item" href="{% url 'profile-top-comments' profile_user.pk %}">Top</a>
+                        <a class="dropdown-item active" href="{% url 'profile-controversial-comments' profile_user.pk %}">Controversial</a>
+                    {% endif %}
+                </div>
+            </span>
         </div>
         <div class='list-group'>
             {% if profile_user.comment_set.all %}

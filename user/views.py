@@ -82,7 +82,37 @@ def profile_controversial_posts(request, pk):
 def profile_comments(request, pk):
     profile_user = get_object_or_404(User, pk=pk)
 
-    paginator = Paginator(profile_user.comment_set.all(), 4)
+    paginator = Paginator(profile_user.comment_set.all().order_by('-date_posted'), 4)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'profile_user': profile_user,
+        'page_obj': page_obj
+    }
+
+    return render(request, 'blog/profile_comments.html', context)
+
+def profile_top_comments(request, pk):
+    profile_user = get_object_or_404(User, pk=pk)
+    
+    comment_list = sorted(profile_user.comment_set.all(), key=lambda obj: -obj.get_rating())
+    paginator = Paginator(comment_list, 4)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'profile_user': profile_user,
+        'page_obj': page_obj
+    }
+
+    return render(request, 'blog/profile_comments.html', context)
+
+def profile_controversial_comments(request, pk):
+    profile_user = get_object_or_404(User, pk=pk)
+    
+    comment_list = sorted(profile_user.comment_set.all(), key=lambda obj: obj.get_rating())
+    paginator = Paginator(comment_list, 4)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
