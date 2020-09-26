@@ -22,6 +22,15 @@ class Home_Most_Liked_View(ListView):
     def get_queryset(self):
         return sorted(Post.objects.all(), key=lambda obj: -obj.get_rating())
 
+class Home_Most_Disliked_View(ListView):
+    model = Post
+    template_name = 'blog/home.html'
+    context_object_name = 'posts'
+    paginate_by = 5
+
+    def get_queryset(self):
+        return sorted(Post.objects.all(), key=lambda obj: obj.get_rating())
+    
 class BoardsView(ListView):
     model = Board
     template_name = 'blog/board_list.html'
@@ -43,6 +52,16 @@ def board_detail_most_liked(request, pk):
     """
 
     board_posts = sorted(Board.objects.get(pk=pk).post_set.all(), key=lambda obj: -obj.get_rating())    
+    context = {'board': Board.objects.get(pk=pk), 'board_posts': board_posts}
+
+    return render(request, 'blog/board_post_list.html', context)
+
+def board_detail_most_disliked(request, pk):
+    """
+    Takes in pk of board and renders list of posts in board sorted by post.get_rating()
+    """
+
+    board_posts = sorted(Board.objects.get(pk=pk).post_set.all(), key=lambda obj: obj.get_rating())    
     context = {'board': Board.objects.get(pk=pk), 'board_posts': board_posts}
 
     return render(request, 'blog/board_post_list.html', context)

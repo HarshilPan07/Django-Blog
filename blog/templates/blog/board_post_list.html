@@ -11,16 +11,16 @@
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     {% if request.resolver_match.url_name == 'board-detail-list' %}
                         <a class="dropdown-item active" href="{% url 'board-detail-list' board.pk %}">Recent</a>
-                        <a class="dropdown-item" href="{% url 'board-top-all-view' board.pk %}">Top</a>
-                        <a class="dropdown-item" href="#">Controversial</a>
-                    {% elif request.resolver_match.url_name == 'board-top-all-view' %}
+                        <a class="dropdown-item" href="{% url 'board-top-all' board.pk %}">Top</a>
+                        <a class="dropdown-item" href="{% url 'board-controversial' board.pk %}">Controversial</a>
+                    {% elif request.resolver_match.url_name == 'board-top-all' %}
                         <a class="dropdown-item" href="{% url 'board-detail-list' board.pk %}">Recent</a>
-                        <a class="dropdown-item active" href="{% url 'board-top-all-view' board.pk %}">Top</a>
-                        <a class="dropdown-item" href="#">Controversial</a>
+                        <a class="dropdown-item active" href="{% url 'board-top-all' board.pk %}">Top</a>
+                        <a class="dropdown-item" href="{% url 'board-controversial' board.pk %}">Controversial</a>
                     {% else %}
                         <a class="dropdown-item" href="{% url 'board-detail-list' board.pk %}">Recent</a>
-                        <a class="dropdown-item" href="{% url 'board-top-all-view' board.pk %}">Top</a>
-                        <a class="dropdown-item active" href="#">Controversial</a>
+                        <a class="dropdown-item" href="{% url 'board-top-all' board.pk %}">Top</a>
+                        <a class="dropdown-item active" href="{% url 'board-controversial' board.pk %}">Controversial</a>
                     {% endif %}
                 </div>
             </div>

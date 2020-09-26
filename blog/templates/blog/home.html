@@ -11,16 +11,16 @@
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     {% if request.resolver_match.url_name == 'home' %}
                         <a class="dropdown-item active" href="{% url 'home' %}">Recent</a>
-                        <a class="dropdown-item" href="{% url 'home-top-all-view' %}">Top</a>
-                        <a class="dropdown-item" href="#">Controversial</a>
-                    {% elif request.resolver_match.url_name == 'home-top-all-view' %}
+                        <a class="dropdown-item" href="{% url 'home-top-all' %}">Top</a>
+                        <a class="dropdown-item" href="{% url 'home-controversial' %}">Controversial</a>
+                    {% elif request.resolver_match.url_name == 'home-top-all' %}
                         <a class="dropdown-item" href="{% url 'home' %}">Recent</a>
-                        <a class="dropdown-item active" href="{% url 'home-top-all-view' %}">Top</a>
-                        <a class="dropdown-item" href="#">Controversial</a>
+                        <a class="dropdown-item active" href="{% url 'home-top-all' %}">Top</a>
+                        <a class="dropdown-item" href="{% url 'home-controversial' %}">Controversial</a>
                     {% else %}
                         <a class="dropdown-item" href="{% url 'home' %}">Recent</a>
-                        <a class="dropdown-item" href="{% url 'home-top-all-view' %}">Top</a>
-                        <a class="dropdown-item active" href="#">Controversial</a>
+                        <a class="dropdown-item" href="{% url 'home-top-all' %}">Top</a>
+                        <a class="dropdown-item active" href="{% url 'home-controversial' %}">Controversial</a>
                     {% endif %}
                 </div>
             </div>
