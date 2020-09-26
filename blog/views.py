@@ -17,7 +17,6 @@ class Home_Most_Liked_View(ListView):
     model = Post
     template_name = 'blog/home.html'
     context_object_name = 'posts'
-
     paginate_by = 5
 
     def get_queryset(self):
@@ -31,6 +30,16 @@ class BoardsView(ListView):
 class BoardDetailView(DetailView):
     model = Board
     template_name = 'blog/board_post_list.html'
+    
+    def get_queryset(self):
+        return Board.objects.get(pk=self.kwargs['pk']).post_set.all().order_by('-date_posted')
+
+class Board_Most_Liked_View(DetailView):
+    model = Board
+    template_name = 'blog/board_post_list.html'
+
+    def get_queryset(self):
+        return sorted(Board.objects.get(pk=self.kwargs['pk']).post_set.all(), key=lambda obj: -obj.get_rating())
 
 class CreateBoardView(LoginRequiredMixin, CreateView):
     model = Board

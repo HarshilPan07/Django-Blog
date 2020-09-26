@@ -4,9 +4,24 @@
     <div class='row py-3 border-bottom'>
         <div class='mr-auto'>
             <h4>Posts in {{ board }}</h4>
+            <div class="dropdown">
+                {% if request.resolver_match.url_name == 'top-all-view' %}
+                    <h5 class='border-bottom'>Top Posts</h5>
+                {% else %}
+                    <h5 class='border-bottom'>Recent Posts</h5>
+                {% endif %}
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Sort By
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="{% url 'board-detail-list' board.pk %}">Recent</a>
+                    <a class="dropdown-item" href="{% url 'board-top-all-view' board.pk %}">Top</a>
+                    <a class="dropdown-item" href="#">Controversial</a>
+                </div>
+            </div>
         </div>
-        <div>
-            <a href="{% url 'create-post' %}" role='button' class='btn btn-outline-primary'>Create Post</a>
+        <div class='btn-group align-self-end'>
+            <a href="{% url 'create-post' %}" role='button' class='btn btn-outline-primary mr-2'>Create Post</a>
             {% if board in user.subs.all %}
                 <a href="{% url 'unsubscribe' board.id %}" role="button" class="btn btn-primary">Unsubscribe</a>
             {% else %}

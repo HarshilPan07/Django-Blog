@@ -3,14 +3,23 @@
 {% block header %}
     <div class='row py-3 border-bottom'>
         <div class='mr-auto'>
-            {% if request.resolver_match.url_name == 'top-all-view' %}
-                <h4>Top Posts</h4>
-            {% else %}
-                <h4>Recent Posts</h4>
-            {% endif %}
-            
+            <div class="dropdown">
+                {% if request.resolver_match.url_name == 'top-all-view' %}
+                    <h5 class='border-bottom'>Top Posts</h5>
+                {% else %}
+                    <h5 class='border-bottom'>Recent Posts</h5>
+                {% endif %}
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Sort By
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="{% url 'home' %}">Recent</a>
+                    <a class="dropdown-item" href="{% url 'home-top-all-view' %}">Top</a>
+                    <a class="dropdown-item" href="#">Controversial</a>
+                </div>
+            </div>
         </div>
-        <div>
+        <div class='align-self-end'>
             <a href="{% url 'create-post' %}" role='button' class='btn btn-outline-primary'>Create Post</a>
         </div>
     </div>

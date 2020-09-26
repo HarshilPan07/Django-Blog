@@ -8,6 +8,7 @@ from .views import (
         DeletePostView, 
         BoardsView, 
         BoardDetailView, 
+        Board_Most_Liked_View,
         CreateBoardView, 
         post_view, 
         like_post, 
@@ -20,9 +21,10 @@ from user.views import subscribe, unsubscribe
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
-    path('/top_all/', Home_Most_Liked_View.as_view(), name='top-all-view'),
+    path('/top_all/', Home_Most_Liked_View.as_view(), name='home-top-all-view'),
     path('boards/', BoardsView.as_view(), name='boards'),
     path('boards/<int:pk>/', BoardDetailView.as_view(), name='board-detail-list'),
+    path('boards/<int:pk>/top_all/', Board_Most_Liked_View.as_view(), name='board-top-all-view'),
     path('create-board/', CreateBoardView.as_view(), name='create-board'),
     path('boards/<int:pk>/subscribe/', subscribe, name='subscribe'),
     path('boards/<int:pk>/unsubscribe/', unsubscribe, name='unsubscribe'),
