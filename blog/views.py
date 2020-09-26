@@ -102,14 +102,7 @@ class DeletePostView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             return True
         return False
 
-def post_view(request, pk):
-    """
-    Uses CommentForm(), fields=['content']
-    Gets Post object with pk
-    Checks validation and saves if POST method, sends empty CommentForm() instance else
-    Renders detail.html with Post object and CommentForm instance passed as context 
-    """
-    
+def post_view(request, pk):    
     post = get_object_or_404(Post, pk=pk)
 
     if request.method == 'POST':
@@ -130,12 +123,6 @@ def post_view(request, pk):
 
 @login_required(redirect_field_name='redirect-to', login_url='login')
 def like_post(request, pk):
-    """
-    Gets Post and User instance with pk
-    Appropriately adds or removes like to post_likes/post_dislikes based whether post is liked, disliked, or none
-    Returns HTTPResponseRedirect to post page with args=(post.id)
-    """
-    
     post = get_object_or_404(Post, pk=pk)
     user = request.user
     
@@ -151,12 +138,6 @@ def like_post(request, pk):
 
 @login_required(redirect_field_name='redirect-to', login_url='login')
 def dislike_post(request, pk):
-    """
-    Gets Post and User instance with pk
-    Appropriately adds or removes dislike to post_likes/post_dislikes based whether post is liked, disliked, or none
-    Returns HTTPResponseRedirect to post page with args=(post.id)
-    """
-    
     post = get_object_or_404(Post, pk=pk)
     user = request.user
     
@@ -171,13 +152,7 @@ def dislike_post(request, pk):
     return redirect(reverse('post', args=[post.id]))
 
 @login_required(redirect_field_name='redirect-to', login_url='login')
-def like_comment(request, post_pk, comment_pk):
-    """
-    Gets Post, User, and Comment instance with post and comment pks
-    Appropriately adds or removes dislike to comment_likes/comment_dislikes based whether post is liked, disliked, or none
-    Returns HTTPResponseRedirect to post page with args=(post.id)
-    """
-    
+def like_comment(request, post_pk, comment_pk):    
     post = get_object_or_404(Post, pk=post_pk)
     comment = get_object_or_404(Comment, pk=comment_pk)
     user = request.user
@@ -194,12 +169,6 @@ def like_comment(request, post_pk, comment_pk):
 
 @login_required(redirect_field_name='redirect-to', login_url='login')
 def dislike_comment(request, post_pk, comment_pk):
-    """
-    Gets Post, User, and Comment instance with post and comment pks
-    Appropriately adds or removes dislike to comment_likes/comment_dislikes based whether post is liked, disliked, or none
-    Returns HTTPResponseRedirect to post page with args=(post.id)
-    """
-    
     post = get_object_or_404(Post, pk=post_pk)
     comment = get_object_or_404(Comment, pk=comment_pk)
     user = request.user
