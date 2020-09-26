@@ -32,9 +32,9 @@
 {% endblock header %}
 
 {% block content %}
-    {% if board.post_set.all %}
+    {% if board_posts %}
         <div class='list-group py-3'>
-            {% for post in board.post_set.all %}
+            {% for post in board_posts %}
                 <div class='d-flex bd-highlight'>
                     <div class='px-2 flex-shrink-1 bd-highlight'>
                         <div class='d-flex justify-content-center'>

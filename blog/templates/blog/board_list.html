@@ -16,7 +16,7 @@
         <div class='list-group py-3'>
             {% for board in boards %}
                 <div class='py-1'>
-                    <a href="{% url 'board-detail-list' board.id %}" class='list-group-item list-group-item-action'>
+                    <a href="{% url 'board-detail-list' board.pk %}" class='list-group-item list-group-item-action'>
                         <div>
                             <h5>{{ board.title }}</h5>
                         </div>

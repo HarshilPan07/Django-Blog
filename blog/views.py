@@ -27,19 +27,25 @@ class BoardsView(ListView):
     template_name = 'blog/board_list.html'
     context_object_name = 'boards'
 
-class BoardDetailView(DetailView):
-    model = Board
-    template_name = 'blog/board_post_list.html'
+def board_detail(request, pk):
+    """
+    Takes in pk of board and renders list of posts in board sorted by date_posted
+    """
     
-    def get_queryset(self):
-        return Board.objects.get(pk=self.kwargs['pk']).post_set.all().order_by('-date_posted')
+    board_posts = Board.objects.get(pk=pk).post_set.all().order_by('-date_posted')
+    context = {'board': Board.objects.get(pk=pk), 'board_posts': board_posts}
 
-class Board_Most_Liked_View(DetailView):
-    model = Board
-    template_name = 'blog/board_post_list.html'
+    return render(request, 'blog/board_post_list.html', context)
 
-    def get_queryset(self):
-        return sorted(Board.objects.get(pk=self.kwargs['pk']).post_set.all(), key=lambda obj: -obj.get_rating())
+def board_detail_most_liked(request, pk):
+    """
+    Takes in pk of board and renders list of posts in board sorted by post.get_rating()
+    """
+
+    board_posts = sorted(Board.objects.get(pk=pk).post_set.all(), key=lambda obj: -obj.get_rating())    
+    context = {'board': Board.objects.get(pk=pk), 'board_posts': board_posts}
+
+    return render(request, 'blog/board_post_list.html', context)
 
 class CreateBoardView(LoginRequiredMixin, CreateView):
     model = Board
