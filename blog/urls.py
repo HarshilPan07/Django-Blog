@@ -23,8 +23,8 @@ from user.views import subscribe, unsubscribe
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
-    path('/top_all/', Home_Most_Liked_View.as_view(), name='home-top-all'),
-    path('/controversial/', Home_Most_Disliked_View.as_view(), name='home-controversial'),
+    path('top_all/', Home_Most_Liked_View.as_view(), name='home-top-all'),
+    path('controversial/', Home_Most_Disliked_View.as_view(), name='home-controversial'),
     path('boards/', BoardsView.as_view(), name='boards'),
     path('boards/<int:pk>/', board_detail, name='board-detail-list'),
     path('boards/<int:pk>/top_all/', board_detail_most_liked, name='board-top-all'),

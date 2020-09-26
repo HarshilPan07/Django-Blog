@@ -37,30 +37,18 @@ class BoardsView(ListView):
     context_object_name = 'boards'
 
 def board_detail(request, pk):
-    """
-    Takes in pk of board and renders list of posts in board sorted by date_posted
-    """
-    
     board_posts = Board.objects.get(pk=pk).post_set.all().order_by('-date_posted')
     context = {'board': Board.objects.get(pk=pk), 'board_posts': board_posts}
 
     return render(request, 'blog/board_post_list.html', context)
 
 def board_detail_most_liked(request, pk):
-    """
-    Takes in pk of board and renders list of posts in board sorted by post.get_rating()
-    """
-
     board_posts = sorted(Board.objects.get(pk=pk).post_set.all(), key=lambda obj: -obj.get_rating())    
     context = {'board': Board.objects.get(pk=pk), 'board_posts': board_posts}
 
     return render(request, 'blog/board_post_list.html', context)
 
 def board_detail_most_disliked(request, pk):
-    """
-    Takes in pk of board and renders list of posts in board sorted by post.get_rating()
-    """
-
     board_posts = sorted(Board.objects.get(pk=pk).post_set.all(), key=lambda obj: obj.get_rating())    
     context = {'board': Board.objects.get(pk=pk), 'board_posts': board_posts}
 
@@ -130,7 +118,7 @@ def post_view(request, pk):
         if comment_form.is_valid():
             comment = comment_form.save(commit=False)
             comment.post = post
-            comment.commenter = request.user
+            comment.author = request.user
             comment.save()
         
     else:

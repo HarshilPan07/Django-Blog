@@ -63,7 +63,7 @@
                 {% for comment in post.get_recent_comments %}
                 <li class='list-group-item'>
                     <div class='row'>
-                        <small><a href="{% url 'view-profile' comment.commenter.id %}">{{ comment.commenter }}</a> {{ comment.date_posted }}</small>
+                        <small><a href="{% url 'view-profile' comment.author.id %}">{{ comment.author }}</a> {{ comment.date_posted }}</small>
                     </div>
                     <div class='row'>
                         <small>
