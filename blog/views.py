@@ -104,6 +104,7 @@ class DeletePostView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 def post_view(request, pk):    
     post = get_object_or_404(Post, pk=pk)
+    comments = post.get_recent_comments()
 
     if request.method == 'POST':
         comment_form = CommentForm(request.POST)
@@ -113,11 +114,57 @@ def post_view(request, pk):
             comment.post = post
             comment.author = request.user
             comment.save()
+            
+            return redirect(reverse('post', args=[post.id]))
         
     else:
         comment_form = CommentForm()
     
-    context = {'post': post, 'comment_form': comment_form}
+    context = {'post': post, 'comments': comments, 'comment_form': comment_form}
+
+    return render(request, 'blog/detail.html', context)
+
+def post_view_top_comments(request, pk):    
+    post = get_object_or_404(Post, pk=pk)
+    comments = sorted(post.comment_set.all(), key=lambda obj: -obj.get_rating())
+
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.post = post
+            comment.author = request.user
+            comment.save()
+            
+            return redirect(reverse('post', args=[post.id]))
+        
+    else:
+        comment_form = CommentForm()
+    
+    context = {'post': post, 'comments': comments, 'comment_form': comment_form}
+
+    return render(request, 'blog/detail.html', context)
+
+def post_view_controversial_comments(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    comments = sorted(post.comment_set.all(), key=lambda obj: obj.get_rating())
+
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.post = post
+            comment.author = request.user
+            comment.save()
+
+            return redirect(reverse('post', args=[post.id]))
+        
+    else:
+        comment_form = CommentForm()
+    
+    context = {'post': post, 'comments': comments, 'comment_form': comment_form}
 
     return render(request, 'blog/detail.html', context)
 

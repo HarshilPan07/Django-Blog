@@ -55,12 +55,32 @@
         </form>
     {% endif %}
     </div>
-    <h5 class='pt-3'>Comments</h5>
-    <hr>
-    {% if post.comment_set.all %}
+    <div class="row dropdown border-bottom">
+        <h5 class='align-self-end pt-3 mx-3'>Comments</h5>
+        <hr>
+        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Sort By
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {% if request.resolver_match.url_name == 'post' %}
+                <a class="dropdown-item active" href="{% url 'post' post.pk %}">Recent</a>
+                <a class="dropdown-item" href="{% url 'post-top-comments' post.pk %}">Top</a>
+                <a class="dropdown-item" href="{% url 'post-controversial-comments' post.pk %}">Controversial</a>
+            {% elif request.resolver_match.url_name == 'post-top-comments' %}
+                <a class="dropdown-item" href="{% url 'post' post.pk %}">Recent</a>
+                <a class="dropdown-item active" href="{% url 'post-top-comments' post.pk %}">Top</a>
+                <a class="dropdown-item" href="{% url 'post-controversial-comments' post.pk %}">Controversial</a>
+            {% else %}
+                <a class="dropdown-item" href="{% url 'post' post.pk %}">Recent</a>
+                <a class="dropdown-item" href="{% url 'post-top-comments' post.pk %}">Top</a>
+                <a class="dropdown-item active" href="{% url 'post-controversial-comments' post.pk %}">Controversial</a>
+            {% endif %}
+        </div>
+    </div>
+    {% if comments %}
         <div class='list-group py-3'>
             <ul class='list-group list-group-flush'>
-                {% for comment in post.get_recent_comments %}
+                {% for comment in comments %}
                 <li class='list-group-item'>
                     <div class='row'>
                         <small><a href="{% url 'view-profile' comment.author.id %}">{{ comment.author }}</a> {{ comment.date_posted }}</small>
