@@ -34,6 +34,7 @@
                     <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
                     </svg>
                 </a> 
+                <small class='text-muted align-self-end'>{{ comments.count }} comments</small>
             </div>
             <div class='col-2'>
                 {% if user == post.author %}
@@ -48,17 +49,28 @@
 <div>
     <div>
     {% if user.is_authenticated %}
-        <form action="#" method="POST">
+        <form action="#" method="POST" class='row'>
             {% csrf_token %}
-            {{ comment_form | crispy }}
-            <button class='btn btn-primary d-flex justify-content-end' type="submit">Add Comment</button>
+            <div class='col-10 mr-5'>
+                {{ comment_form | crispy }}
+            </div>
+            <button class='btn btn-primary  ml-5 my-3 align-self-end' type="submit">Add Comment</button>
         </form>
+    {% else %}
+        <div class='row justify-content-center mx-3 py-2 border rounded' style="background-color: #f6f8f9;">
+            <div class='col-4 align-self-end justify-content-end'>
+                <h5 class='text-muted'>Log in or Sign Up to write a comment.</h5>
+            </div>
+            
+            <div class='col-4'>
+                <a href="{% url 'login' %}" class='btn btn-outline-primary mx-2' role="button">LOG IN</a>
+                <a href="{% url 'register' %}" class='btn btn-primary' role="button" style="color: white;">SIGN UP</a>
+            </div>
+        </div>
     {% endif %}
     </div>
-    <div class="row dropdown border-bottom">
-        <h5 class='align-self-end pt-3 mx-3'>Comments</h5>
-        <hr>
-        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <div class="row justify-content-end dropdown mx-1 my-1 py-1">
+        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Sort By
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -78,7 +90,7 @@
         </div>
     </div>
     {% if comments %}
-        <div class='list-group py-3'>
+        <div class='list-group py-2'>
             <ul class='list-group list-group-flush'>
                 {% for comment in comments %}
                 <li class='list-group-item'>
@@ -124,3 +136,28 @@
     {% endif %}
 </div>
 {% endblock content %}
+
+{% block sidebar %}
+    <div class='jumbotron m-3'>
+        <h3>{{ post.board.title }}</h3>
+        <hr>
+        <div class='pt-3'>
+            <p>{{ post.board.description }}</p>
+            <div class='row'>
+                <small class='col-8 align-self-center'>{{ board.subscription.count }} members</small>
+                {% if post.board in user.subs.all %}
+                    <a href="{% url 'unsubscribe' post.board.id %}" role="button" class="col-4 btn btn-primary">Unsubscribe</a>
+                {% else %}
+                    <a href="{% url 'subscribe' post.board.id %}" role="button" class="col-4 btn btn-primary">Subscribe</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="list-group my-3">
+        <a href="#" class="list-group-item list-group-item-action disabled" style="background-color: #006DFE; color: white;">Popular Boards</a>
+        <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
+        <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
+        <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
+    </div>
+{% endblock sidebar %}

@@ -10,6 +10,36 @@
 {% endblock header %}
 
 {% block content %}
+    <div>
+        <span class='d-flex justify-content-around'>
+            <a href="#">A</a>
+            <a href="#">B</a>
+            <a href="#">C</a>
+            <a href="#">D</a>
+            <a href="#">E</a>
+            <a href="#">F</a>
+            <a href="#">G</a>
+            <a href="#">H</a>
+            <a href="#">I</a>
+            <a href="#">J</a>
+            <a href="#">K</a>
+            <a href="#">L</a>
+            <a href="#">M</a>
+            <a href="#">N</a>
+            <a href="#">O</a>
+            <a href="#">P</a>
+            <a href="#">Q</a>
+            <a href="#">R</a>
+            <a href="#">S</a>
+            <a href="#">T</a>
+            <a href="#">U</a>
+            <a href="#">V</a>
+            <a href="#">W</a>
+            <a href="#">X</a>
+            <a href="#">Y</a>
+            <a href="#">Z</a>
+        </span>
+    </div>
     {% if boards %}
         <div class='list-group py-3'>
             {% for board in boards %}
@@ -35,3 +65,12 @@
         </div>
     {% endif %}
 {% endblock content %}
+
+{% block sidebar %}
+    <div class="list-group my-3">
+        <a href="#" class="list-group-item list-group-item-action disabled" style="background-color: #006DFE; color: white;">Communities</a>
+        <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
+        <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
+        <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
+    </div>
+{% endblock sidebar %}

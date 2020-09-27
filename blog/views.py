@@ -36,6 +36,9 @@ class BoardsView(ListView):
     template_name = 'blog/board_list.html'
     context_object_name = 'boards'
 
+    def get_queryset(self):
+        return Board.objects.all().order_by('title')
+    
 def board_detail(request, pk):
     board_posts = Board.objects.get(pk=pk).post_set.all().order_by('-date_posted')
     context = {'board': Board.objects.get(pk=pk), 'board_posts': board_posts}
