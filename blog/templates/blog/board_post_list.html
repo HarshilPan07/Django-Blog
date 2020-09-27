@@ -94,7 +94,7 @@
     <div class='jumbotron my-3'>
         <h3>{{ board.title }}</h3>
         <hr>
-        <div class='pt-3'>
+        <div>
             <p>{{ board.description }}</p>
             <div class='row'>
                 <small class='col-8 align-self-center'>{{ board.subscription.count }} members</small>
@@ -104,18 +104,20 @@
                     <a href="{% url 'subscribe' board.id %}" role="button" class="col-4 btn btn-primary">Subscribe</a>
                 {% endif %}
             </div>
+            <hr>
+            <small>Created on {{ board.date_created }}</small>
         </div>
     </div>
       
     <div class="list-group my-3">
-        <a href="#" class="list-group-item list-group-item-action disabled" style="background-color: #006DFE; color: white;">Other Boards in this Community</a>
+        <a href="#" class="list-group-item list-group-item-action active disabled">Similar Boards</a>
         <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
         <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
         <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
     </div>
 
     <div class="list-group my-3">
-        <a href="#" class="list-group-item list-group-item-action disabled" style="background-color: #006DFE; color: white;">Popular Boards</a>
+        <a href="#" class="list-group-item list-group-item-action active disabled">Popular Boards</a>
         <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
         <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
         <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
