@@ -35,12 +35,9 @@
                     <li class='nav-item dropdown'>
                       <a href="#" class='nav-link dropdown-toggle' id='navbarDropdownMenuLink' role='button' data-toggle='dropdown'>{{ user.username }}</a>
                       <div class='dropdown-menu'>
+                        <a href="{% url 'user-subscriptions' %}" class='dropdown-item'>Subscriptions</a>
                         <a href="{% url 'view-profile' user.pk %}" class='dropdown-item'>Profile</a>
-                        <a href="{% url 'update-information' %}" class='dropdown-item'>Update Profile</a>
                       </div>
-                    </li>
-                    <li class='navbar-item'>
-                      <a href="{% url 'user-subscriptions' %}" class='nav-link'>Subscriptions</a>
                     </li>
                      <li class='navbar-item'>
                       <a href="{% url 'logout' %}" class='btn btn-primary' role="button" style="color: white;">LOG OUT</a>

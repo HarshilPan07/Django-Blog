@@ -26,7 +26,7 @@
 {% endblock profile-navbar %}
 
 {% block content %}    
-    <div class='card'>    
+    <div class='card my-4'>    
         <div class='card-header'>
             <span class='row'>
                 <h5 class='col-10 mr-4 align-self-end'>Posts</h5>
@@ -93,5 +93,8 @@
             </div>
         {% endif %}
     </div>
+    {% if profile_user == user %}
+        <a href="{% url 'update-information' %}" class="btn btn-primary col mb-4" role="button">Edit Profile</a>
+    {% endif %}
 {% endblock content %}
 
