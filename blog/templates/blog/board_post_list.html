@@ -1,10 +1,10 @@
 {% extends 'blog/base.html' %}
 
 {% block header %}    
-    <div class='row ml-5 py-3 border-bottom'>
+    <div class='row mx-1 my-3 py-3 border rounded-lg' style="background-color: #f7f8f9;">
         <div class='mr-auto'>
             <div class="row dropdown">
-                <h5 class='align-self-end mx-3'>Posts in {{ board }}</h5>
+                <h5 class='lead align-self-end mx-4'>Posts in {{ board }}</h5>
                 <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Sort By
                 </button>
@@ -36,7 +36,7 @@
         <div class='list-group py-3'>
             {% for post in board_posts %}
                 <div class='d-flex bd-highlight'>
-                    <div class='px-2 flex-shrink-1 bd-highlight'>
+                    <div class='px-2 flex-shrink-1 bd-highlight' style="background-color: #f6f8f9;">
                         <div class='d-flex justify-content-center'>
                             <a href="{% url 'like-post' post.id %}">
                                 <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-arrow-up-short" fill="#F73009" xmlns="http://www.w3.org/2000/svg">
@@ -61,7 +61,7 @@
                             </a> 
                         </div>
                     </div>
-                    <div class='px-2 py-1 w-100 bd-highlight'>
+                    <div class='px-2 w-100 bd-highlight'>
                         <a href="{% url 'post' post.id %}" class='list-group-item list-group-item-action'>
                             <div class='row'>
                                 <div class='col'>
@@ -91,7 +91,7 @@
 {% endblock content %}
 
 {% block sidebar %}
-    <div class='jumbotron m-3'>
+    <div class='jumbotron my-3'>
         <h3>{{ board.title }}</h3>
         <hr>
         <div class='pt-3'>
@@ -105,5 +105,19 @@
                 {% endif %}
             </div>
         </div>
+    </div>
+      
+    <div class="list-group my-3">
+        <a href="#" class="list-group-item list-group-item-action disabled" style="background-color: #006DFE; color: white;">Other Boards in this Community</a>
+        <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
+        <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
+        <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
+    </div>
+
+    <div class="list-group my-3">
+        <a href="#" class="list-group-item list-group-item-action disabled" style="background-color: #006DFE; color: white;">Popular Boards</a>
+        <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
+        <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
+        <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
     </div>
 {% endblock sidebar %}

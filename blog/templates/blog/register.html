@@ -13,7 +13,7 @@
         {% csrf_token %}
         {{ register_form | crispy}}
         <div class='row'>
-            <small class='mr-auto pl-2 align-self-center'>Already Have An Account? <a href="{% url 'login' %}">Login</a></small>
+            <small class='mr-auto pl-2 text-muted align-self-center'>Already Have An Account? <a href="{% url 'login' %}">Login</a></small>
             <button type='submit' class='btn btn-outline-primary mr-2'>Register</button>
         </div>
     </form>
