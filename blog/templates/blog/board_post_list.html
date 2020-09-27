@@ -25,13 +25,8 @@
                 </div>
             </div>
         </div>
-        <div class='btn-group align-self-end'>
+        <div class='align-self-end'>
             <a href="{% url 'create-post' %}" role='button' class='btn btn-outline-primary mr-2'>Create Post</a>
-            {% if board in user.subs.all %}
-                <a href="{% url 'unsubscribe' board.id %}" role="button" class="btn btn-primary">Unsubscribe</a>
-            {% else %}
-                <a href="{% url 'subscribe' board.id %}" role="button" class="btn btn-primary">Subscribe</a>
-            {% endif %}
         </div>
     </div>
 {% endblock header %}
@@ -94,3 +89,21 @@
     {% endif %}
     
 {% endblock content %}
+
+{% block sidebar %}
+    <div class='jumbotron m-3'>
+        <h3>{{ board.title }}</h3>
+        <hr>
+        <div class='pt-3'>
+            <p>{{ board.description }}</p>
+            <div class='row'>
+                <small class='col-8 align-self-center'>{{ board.subscription.count }} members</small>
+                {% if board in user.subs.all %}
+                    <a href="{% url 'unsubscribe' board.id %}" role="button" class="col-4 btn btn-primary">Unsubscribe</a>
+                {% else %}
+                    <a href="{% url 'subscribe' board.id %}" role="button" class="col-4 btn btn-primary">Subscribe</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock sidebar %}
