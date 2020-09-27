@@ -1,25 +1,25 @@
-{% extends 'blog/base.html' %}
+{% extends 'blog/profile_base.html' %}
 {% load crispy_forms_tags %}
 
 {% block header %}
-<div class='py-3'>
-    <h4>Login</h4>
-</div>
+    <div class='py-3 my-3' style="background-color: #f7f8f9;">
+        <h4 class='lead mx-2'>Login</h4>
+    </div>
 {% endblock header %}
 
 {% block content %}
-<div class='form-group'>
-    <form action="" method='POST'>
-        {% csrf_token %}
-        {{form | crispy}}
-        <div class='row'>
-            <div class='mr-auto'>
-                <small>Don't Have An Account? <a href="{% url 'register' %}">Register Here</a></small>
+    <div class='form-group border rounded p-3' style="background-color: #f7f8f9;">
+        <form action="" method='POST'>
+            {% csrf_token %}
+            {{form | crispy}}
+            <div class='row'>
+                <div class='mr-auto align-self-center'>
+                    <small class='text-muted pl-2'>Don't Have An Account? <a href="{% url 'register' %}">Register Here</a></small>
+                </div>
+                <div class='mx-2 py-2'>
+                    <button type='submit' class='btn btn-outline-primary'>Sign In</button>
+                </div>
             </div>
-            <div>
-                <button type='submit' class='btn btn-outline-primary'>Sign In</button>
-            </div>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
 {% endblock content %}
