@@ -1,10 +1,8 @@
 {% extends 'blog/base.html' %}
 
 {% block header %}
-    <div class='row py-3 border-bottom'>
-        <div class='mr-auto'>
-            <h4>Your Subscriptions</h4>
-        </div>
+    <div class='row my-3 py-3 mx-1 px-2 border rounded' style="background-color: #f7f8f9;">
+        <h5 class='align-self-center mr-auto lead'>Your Subscriptions</h5>
     </div>
 {% endblock header %}
 
@@ -12,13 +10,16 @@
     {% if subbed_boards %}
         <div class='list-group py-3'>
             {% for board in subbed_boards %}
-                <div class='py-1'>
+                <div class='row mx-1'>
                     <a href="{% url 'board-detail-list' board.pk %}" class='list-group-item list-group-item-action'>
-                        <div>
+                        <div class='row pl-3'>
                             <h5>{{ board.title }}</h5>
                         </div>
-                        <div>
+                        <div class='row pl-3'>
                             <small>{{ board.description }}</small>
+                        </div>
+                        <div class='row pl-3'>
+                            <small>{{ board.subscription.count }} members</small>  
                         </div>
                     </a>
                 </div>
@@ -33,3 +34,14 @@
         </div>
     {% endif %}
 {% endblock content %}
+
+{% block sidebar %}
+    <div class="list-group my-3">
+        <a href="#" class="list-group-item list-group-item-action active disabled">Similar Boards</a>
+        <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
+        <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
+        <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
+        <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
+        <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
+    </div>
+{% endblock sidebar %}
