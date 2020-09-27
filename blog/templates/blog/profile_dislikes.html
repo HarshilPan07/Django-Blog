@@ -1,7 +1,7 @@
 {% extends 'blog/profile_base.html' %}
 
 {% block header %}
-    <div class='jumbotron row mt-4'>
+    <div class='jumbotron row mt-4'style="background-color: #f7f8f9;">
         <div class='col-4'>
             <img src="{{ user.profile.picture.url }}" class='rounded-circle account-img border' alt="">
         </div>
@@ -15,7 +15,7 @@
 {% endblock header %}
 
 {% block profile-navbar %}
-    <nav class="nav nav-pills border nav-fill my-4">
+    <nav class="nav nav-pills border nav-fill my-4" style="background-color: #f7f8f9;">
         <a class="nav-link" href="{% url 'view-profile' user.pk %}">Posts</a>
         <a class="nav-link" href="{% url 'profile-comments' user.pk %}">Comments</a>
         <a class="nav-link" href="{% url 'profile-likes' %}">Likes</a>
