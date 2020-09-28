@@ -10,9 +10,6 @@ from .forms import CreateUserForm, UserUpdateForm, ProfileUpdateForm
 from .models import Profile
 from blog.models import Board, Post
 
-LOGIN_URL = 'login'
-REIDRECT_FIELD_NAME = 'next='
-
 def register(request):
     if request.method == 'POST':
         register_form = CreateUserForm(request.POST)
@@ -124,7 +121,7 @@ def profile_controversial_comments(request, pk):
 
     return render(request, 'blog/profile_comments.html', context)
 
-@login_required(redirect_field_name=REIDRECT_FIELD_NAME, login_url=LOGIN_URL)
+@login_required
 def profile_likes(request):
     paginator = Paginator(request.user.post_likes.all(), 4)
     page_number = request.GET.get('page')
@@ -136,7 +133,7 @@ def profile_likes(request):
 
     return render(request, 'blog/profile_likes.html', context)
 
-@login_required(redirect_field_name=REIDRECT_FIELD_NAME, login_url=LOGIN_URL)
+@login_required
 def profile_dislikes(request):
     paginator = Paginator(request.user.post_dislikes.all(), 4)
     page_number = request.GET.get('page')
@@ -148,7 +145,7 @@ def profile_dislikes(request):
 
     return render(request, 'blog/profile_dislikes.html', context)
 
-@login_required(redirect_field_name=REIDRECT_FIELD_NAME, login_url=LOGIN_URL)
+@login_required
 def update_information(request):
     user_update_form = UserUpdateForm(instance=request.user)
     profile_update_form = ProfileUpdateForm(instance=request.user.profile)
@@ -170,7 +167,7 @@ def update_information(request):
 
     return render(request, 'blog/profile_update_info.html', context)
 
-@login_required(redirect_field_name=REIDRECT_FIELD_NAME, login_url=LOGIN_URL)
+@login_required
 def user_subscriptions(request):
     subbed_boards = request.user.subs.all()
 
@@ -179,7 +176,7 @@ def user_subscriptions(request):
     }
     return render(request, 'blog/subscriptions.html', context)
 
-@login_required(redirect_field_name=REIDRECT_FIELD_NAME, login_url=LOGIN_URL)
+@login_required
 def subscribe(request, pk):
     board = get_object_or_404(Board, pk=pk)
 
@@ -187,7 +184,7 @@ def subscribe(request, pk):
 
     return redirect(reverse('board-detail-list', args=[board.pk]))
 
-@login_required(redirect_field_name=REIDRECT_FIELD_NAME, login_url=LOGIN_URL)
+@login_required
 def unsubscribe(request, pk):
     board = get_object_or_404(Board, pk=pk)
 

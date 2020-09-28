@@ -171,7 +171,7 @@ def post_view_controversial_comments(request, pk):
 
     return render(request, 'blog/detail.html', context)
 
-@login_required(redirect_field_name='redirect-to', login_url='login')
+@login_required
 def like_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     user = request.user
@@ -186,7 +186,7 @@ def like_post(request, pk):
 
     return redirect(reverse('post', args=[post.id]))
 
-@login_required(redirect_field_name='redirect-to', login_url='login')
+@login_required
 def dislike_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     user = request.user
@@ -201,7 +201,7 @@ def dislike_post(request, pk):
 
     return redirect(reverse('post', args=[post.id]))
 
-@login_required(redirect_field_name='redirect-to', login_url='login')
+@login_required
 def like_comment(request, post_pk, comment_pk):    
     post = get_object_or_404(Post, pk=post_pk)
     comment = get_object_or_404(Comment, pk=comment_pk)
@@ -217,7 +217,7 @@ def like_comment(request, post_pk, comment_pk):
 
     return redirect(reverse('post', args=[post.id]))
 
-@login_required(redirect_field_name='redirect-to', login_url='login')
+@login_required
 def dislike_comment(request, post_pk, comment_pk):
     post = get_object_or_404(Post, pk=post_pk)
     comment = get_object_or_404(Comment, pk=comment_pk)
