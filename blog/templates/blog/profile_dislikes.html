@@ -31,7 +31,7 @@
         <div class='list-group'>
             {% if user.post_dislikes.all %}
                 {% for post in user.post_dislikes.all %}
-                <a href="{% url 'post' post.id %}" class='list-group-item list-group-item-action'>
+                <a href="{% url 'post' post.board.id post.id %}" class='list-group-item list-group-item-action'>
                     <div>
                         {{ post.title }}
                     </div>
@@ -45,28 +45,7 @@
                 <p class='d-flex pt-2 justify-content-center'>No Posts Disiked</p>
             {% endif %}
         </div>
-
-        {% comment %} <div class='card my-5'>
-            <div class='col card-header'>
-                <h5>Comments Liked</h5>
-            </div>
-            <div class='list-group'>
-                {% if profile_user.comment_likes.all %}
-                    {% for comment in profile_user.comment_likes.all %}
-                    <a href="{% url 'post' comment.post.id %}" class='list-group-item list-group-item-action'>
-                        <div>
-                            {{ comment.content }}
-                        </div>
-                        <div>
-                            <small>posted {{comment.date_posted}} by {{ comment.commenter }}</small>
-                        </div>
-                    </a>
-                    {% endfor %}
-                {% else %}
-                    <p class='d-flex pt-2 justify-content-center'>No Comments Liked</p>
-                {% endif %}
-            </div>
-        </div> {% endcomment %}
+        
         {% if page_obj.paginator.num_pages > 1 %}
             <div class='card-footer d-flex justify-content-end'>
                 <span class='step-links'>

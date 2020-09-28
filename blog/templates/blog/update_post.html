@@ -14,7 +14,7 @@
         {% csrf_token %}
         {{form | crispy}}
         <button type='submit' class='btn btn-outline-primary'>Update</button>
-        <a href="{% url 'post' post.id %}" role='button' class='btn btn-outline-danger'>Cancel</a>
+        <a href="{% url 'post' post.board.id post.id %}" role='button' class='btn btn-outline-danger'>Cancel</a>
     </form>
 </div>
 {% endblock content %}

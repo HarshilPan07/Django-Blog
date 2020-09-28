@@ -53,7 +53,7 @@
         <div class='list-group'>
             {% if profile_user.comment_set.all %}
                 {% for comment in page_obj %}
-                <a href="{% url 'post' comment.post.id %}" class='list-group-item list-group-item-action'>
+                <a href="{% url 'post' comment.post.board.id comment.post.id %}" class='list-group-item list-group-item-action'>
                     <div>
                         {{ comment.content }}
                     </div>

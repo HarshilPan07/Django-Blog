@@ -5,6 +5,7 @@ from .views import (
         Home_Most_Liked_View,
         Home_Most_Disliked_View,
         CreatePostView, 
+        CreatePostInBoardView,
         UpdatePostView, 
         DeletePostView, 
         BoardsView, 
@@ -34,7 +35,7 @@ urlpatterns = [
     path('create-board/', CreateBoardView.as_view(), name='create-board'),
     path('boards/<int:pk>/subscribe/', subscribe, name='subscribe'),
     path('boards/<int:pk>/unsubscribe/', unsubscribe, name='unsubscribe'),
-    path('post/<int:pk>/', post_view, name='post'),
+    path('boards/<int:board_pk>/post/<int:pk>/', post_view, name='post'),
     path('post/<int:pk>/top-comments/', post_view_top_comments, name='post-top-comments'),
     path('post/<int:pk>/controversial-comments/', post_view_controversial_comments, name='post-controversial-comments'),
     path('post/<int:pk>/like/', like_post, name='like-post'),
@@ -43,5 +44,5 @@ urlpatterns = [
     path('post/<int:post_pk>/dislike-comment/<int:comment_pk>', dislike_comment, name='dislike-comment'),
     path('create-post/', CreatePostView.as_view(), name='create-post'),
     path('post/<int:pk>/update-post/', UpdatePostView.as_view(), name='update-post'),
-    path('post/<int:pk>/delete-post/', DeletePostView.as_view(), name='delete-post'),
+    path('boards/<int:board_pk>/post/<int:pk>/delete-post/', DeletePostView.as_view(), name='delete-post'),
 ]

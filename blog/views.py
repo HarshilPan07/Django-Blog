@@ -75,6 +75,20 @@ class CreatePostView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.author = self.request.user
+
+        return super().form_valid(form)
+
+class CreatePostInBoardView(LoginRequiredMixin, CreateView):
+    model = Post
+    template_name = 'blog/create_post.html'
+    form_class = PostForm()
+
+    login_url = 'login'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.author
+        form.instance.board = Board.objects.get(self.kwargs['pk'])
+
         return super().form_valid(form)
 
 class UpdatePostView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
@@ -105,7 +119,7 @@ class DeletePostView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             return True
         return False
 
-def post_view(request, pk):    
+def post_view(request, board_pk, pk):    
     post = get_object_or_404(Post, pk=pk)
     comments = post.get_recent_comments()
 
@@ -118,7 +132,7 @@ def post_view(request, pk):
             comment.author = request.user
             comment.save()
             
-            return redirect(reverse('post', args=[post.id]))
+            return redirect(reverse('post', args=[post.board.id, post.id]))
         
     else:
         comment_form = CommentForm()
@@ -140,7 +154,7 @@ def post_view_top_comments(request, pk):
             comment.author = request.user
             comment.save()
             
-            return redirect(reverse('post', args=[post.id]))
+            return redirect(reverse('post', args=[post.board.id, post.id]))
         
     else:
         comment_form = CommentForm()
@@ -162,7 +176,7 @@ def post_view_controversial_comments(request, pk):
             comment.author = request.user
             comment.save()
 
-            return redirect(reverse('post', args=[post.id]))
+            return redirect(reverse('post', args=[post.board.id, post.id]))
         
     else:
         comment_form = CommentForm()
@@ -184,7 +198,7 @@ def like_post(request, pk):
         user.post_dislikes.remove(post)                                             
         user.post_likes.add(post)
 
-    return redirect(reverse('post', args=[post.id]))
+    return redirect(reverse('post', args=[post.board.id, post.id]))
 
 @login_required
 def dislike_post(request, pk):
@@ -199,7 +213,7 @@ def dislike_post(request, pk):
         user.post_likes.remove(post)                                                
         user.post_dislikes.add(post)
 
-    return redirect(reverse('post', args=[post.id]))
+    return redirect(reverse('post', args=[post.board.id, post.id]))
 
 @login_required
 def like_comment(request, post_pk, comment_pk):    
@@ -215,7 +229,7 @@ def like_comment(request, post_pk, comment_pk):
         user.comment_dislikes.remove(comment)                                                   
         user.comment_likes.add(comment)
 
-    return redirect(reverse('post', args=[post.id]))
+    return redirect(reverse('post', args=[post.board.id, post.id]))
 
 @login_required
 def dislike_comment(request, post_pk, comment_pk):
@@ -231,4 +245,4 @@ def dislike_comment(request, post_pk, comment_pk):
         user.comment_likes.remove(comment)                                                         
         user.comment_dislikes.add(comment)
 
-    return redirect(reverse('post', args=[post.id]))
+    return redirect(reverse('post', args=[post.board.id, post.id]))
