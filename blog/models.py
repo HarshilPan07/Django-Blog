@@ -30,7 +30,7 @@ class Post(models.Model):
         return self.title
     
     def get_absolute_url(self):
-        return reverse("post", kwargs={"board_pk": self.board.pk, "pk": self.pk})
+        return reverse("post", kwargs={"board_pk": self.board.pk, "post_pk": self.pk})
 
     def get_rating(self):
         return self.likes.count() - self.dislikes.count()

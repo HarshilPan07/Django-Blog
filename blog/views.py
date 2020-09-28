@@ -119,8 +119,8 @@ class DeletePostView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             return True
         return False
 
-def post_view(request, board_pk, pk):    
-    post = get_object_or_404(Post, pk=pk)
+def post_view(request, board_pk, post_pk):    
+    post = get_object_or_404(Post, pk=post_pk)
     comments = post.get_recent_comments()
 
     if request.method == 'POST':
@@ -141,8 +141,8 @@ def post_view(request, board_pk, pk):
 
     return render(request, 'blog/detail.html', context)
 
-def post_view_top_comments(request, pk):    
-    post = get_object_or_404(Post, pk=pk)
+def post_view_top_comments(request, board_pk, post_pk):    
+    post = get_object_or_404(Post, pk=post_pk)
     comments = sorted(post.comment_set.all(), key=lambda obj: -obj.get_rating())
 
     if request.method == 'POST':
@@ -163,8 +163,8 @@ def post_view_top_comments(request, pk):
 
     return render(request, 'blog/detail.html', context)
 
-def post_view_controversial_comments(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+def post_view_controversial_comments(request, board_pk, post_pk):
+    post = get_object_or_404(Post, pk=post_pk)
     comments = sorted(post.comment_set.all(), key=lambda obj: obj.get_rating())
 
     if request.method == 'POST':
@@ -186,8 +186,8 @@ def post_view_controversial_comments(request, pk):
     return render(request, 'blog/detail.html', context)
 
 @login_required
-def like_post(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+def like_post(request, board_pk, post_pk):
+    post = get_object_or_404(Post, pk=post_pk)
     user = request.user
     
     if post not in user.post_likes.all() and post not in user.post_dislikes.all():  
@@ -201,8 +201,8 @@ def like_post(request, pk):
     return redirect(reverse('post', args=[post.board.id, post.id]))
 
 @login_required
-def dislike_post(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+def dislike_post(request, board_pk, post_pk):
+    post = get_object_or_404(Post, pk=post_pk)
     user = request.user
     
     if post not in user.post_likes.all() and post not in user.post_dislikes.all():  
@@ -216,7 +216,7 @@ def dislike_post(request, pk):
     return redirect(reverse('post', args=[post.board.id, post.id]))
 
 @login_required
-def like_comment(request, post_pk, comment_pk):    
+def like_comment(request, board_pk, post_pk, comment_pk):    
     post = get_object_or_404(Post, pk=post_pk)
     comment = get_object_or_404(Comment, pk=comment_pk)
     user = request.user
@@ -232,7 +232,7 @@ def like_comment(request, post_pk, comment_pk):
     return redirect(reverse('post', args=[post.board.id, post.id]))
 
 @login_required
-def dislike_comment(request, post_pk, comment_pk):
+def dislike_comment(request, board_pk, post_pk, comment_pk):
     post = get_object_or_404(Post, pk=post_pk)
     comment = get_object_or_404(Comment, pk=comment_pk)
     user = request.user
