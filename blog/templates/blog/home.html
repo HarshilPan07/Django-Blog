@@ -36,7 +36,7 @@
     <div class='list-group py-3'>
         {% for post in page_obj %}
         <div class='d-flex bd-highlight'>
-            <div class='px-2 flex-shrink-1 bd-highlight' style="background-color: #f6f8f9;">
+            <div class='px-2 flex-shrink-1 border-top border-bottom' style="background-color: #f6f8f9;">
                 <div class='d-flex justify-content-center'>
                     <a href="{% url 'like-post' post.board.id post.id %}">
                         <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-arrow-up-short" fill="#F73009" xmlns="http://www.w3.org/2000/svg">
@@ -61,7 +61,7 @@
                     </a> 
                 </div>
             </div>
-            <div class='px-2 w-100 bd-highlight'>
+            <div class='w-100 bd-highlight'>
                 <a href="{% url 'post' post.board.id post.id %}" class='list-group-item list-group-item-action'>
                     <div class='row'>
                         <div class='col'>

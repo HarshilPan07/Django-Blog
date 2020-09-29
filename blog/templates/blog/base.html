@@ -28,9 +28,20 @@
                     <a class="nav-link" href="{% url 'boards' %}">Boards</a>
                   </li>
                   {% if user.is_authenticated %}
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">Subscriptions</a>
-                    </li>
+                    <div class='navbar-nav'>  
+                      <ul class='navbar-nav'>
+                        {% if user.is_authenticated %}
+                          <li class='nav-item dropdown'>
+                            <a href="#" class='btn btn-outline-primary dropdown-toggle' id='navbarDropdownMenuLink' role='button' data-toggle='dropdown'>Subscriptions</a>
+                            <div class='dropdown-menu'>
+                            {% for board in user.subs.all %}
+                                <a href="{% url 'board-detail-list' board.pk %}" class='dropdown-item'>{{ board.title }}</a>
+                            {% endfor %}
+                            </div>
+                          </li>
+                        {% endif %}
+                      </ul>
+                    </div>
                   {% endif %}
                 </ul>
               </div>

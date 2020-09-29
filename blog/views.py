@@ -95,7 +95,7 @@ class CreatePostInBoardView(LoginRequiredMixin, CreateView):
 class UpdatePostView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     template_name = 'blog/update_post.html'
-    form_class = PostForm
+    fields=['title', 'content']
     login_url = 'login'
     redirect_field_name = 'redirect-to'
     
