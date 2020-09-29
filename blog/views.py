@@ -148,18 +148,30 @@ def edit_comment(request, board_pk, post_pk, comment_pk):
     
     comment_to_edit = post.comment_set.all().get(pk=comment_pk)
     edit_comment_form = CommentForm(instance=comment_to_edit)
+    comment_form = CommentForm()
 
     if request.method == 'POST':
-        edit_comment_form = CommentForm(request.POST, instance=comment_to_edit)
+        if 'add-comment-form' in request.POST:
+            comment_form = CommentForm(request.POST)
 
-        if edit_comment_form.is_valid():
-            comment_to_edit = edit_comment_form.save(commit=False)
-            comment_to_edit.date_edited = timezone.now()
-            comment_to_edit.save()
+            if comment_form.is_valid():
+                comment = comment_form.save(commit=False)
+                comment.post = post
+                comment.author = request.user
+                comment.save()
+                
+                return redirect(reverse('post', args=[post.board.id, post.id]))
+        else:    
+            edit_comment_form = CommentForm(request.POST, instance=comment_to_edit)
 
-            return redirect(reverse('post', args=[board_pk, post_pk]))
+            if edit_comment_form.is_valid():
+                comment_to_edit = edit_comment_form.save(commit=False)
+                comment_to_edit.date_edited = timezone.now()
+                comment_to_edit.save()
 
-    context = {'post': post, 'comments': comments, 'edit_comment_form': edit_comment_form, 'comment_to_edit': comment_to_edit}
+                return redirect(reverse('post', args=[board_pk, post_pk]))
+    
+    context = {'post': post, 'comments': comments, 'edit_comment_form': edit_comment_form, 'comment_form': comment_form, 'comment_to_edit': comment_to_edit}
 
     return render(request, 'blog/detail.html', context)
 
@@ -171,9 +183,9 @@ def delete_comment(request, board_pk, post_pk, comment_pk):
     comment_to_delete.delete()
 
     context = {'post': post, 'comments': comments}
-
-    return render(request, 'blog/detail.html', context)
-
+    
+    return redirect(reverse('post', args=[board_pk, post_pk]))
+    
 def post_view_top_comments(request, board_pk, post_pk):    
     post = get_object_or_404(Post, pk=post_pk)
     comments = sorted(post.comment_set.all(), key=lambda obj: -obj.get_rating())
