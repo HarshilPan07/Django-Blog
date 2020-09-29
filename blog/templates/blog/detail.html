@@ -134,8 +134,11 @@
                                     {{ edit_comment_form | crispy }}
                                     
                                     {% if edit_comment_form %}
-                                        <button class='btn btn-primary ml-2 my-3 align-self-end' type="submit">Edit Comment</button>
-                                        <a href="{% url 'post' board_pk=post.board.pk post_pk=post.pk %}" role="button" class='btn btn-danger'>Cancel</a>
+                                        <div >
+                                            <button class='btn btn-primary ml-2 my-3 align-self-end' type="submit">Edit Comment</button>
+                                            <a href="{% url 'delete-comment' board_pk=post.board.pk post_pk=post.pk comment_pk=comment.pk %}" role="button" class="btn btn-danger">Delete</a>
+                                            <a href="{% url 'post' board_pk=post.board.pk post_pk=post.pk %}" role="button" class='btn btn-outline-danger justify-content-end'>Cancel</a>
+                                        </div>
                                     {% endif %}
                                 </form>
                             {% else %}

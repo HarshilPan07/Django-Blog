@@ -156,10 +156,21 @@ def edit_comment(request, board_pk, post_pk, comment_pk):
             comment_to_edit = edit_comment_form.save(commit=False)
             comment_to_edit.date_edited = timezone.now()
             comment_to_edit.save()
-            
+
             return redirect(reverse('post', args=[board_pk, post_pk]))
 
     context = {'post': post, 'comments': comments, 'edit_comment_form': edit_comment_form, 'comment_to_edit': comment_to_edit}
+
+    return render(request, 'blog/detail.html', context)
+
+def delete_comment(request, board_pk, post_pk, comment_pk):
+    post = get_object_or_404(Post, pk=post_pk)
+    comments = post.get_recent_comments()
+    
+    comment_to_delete = post.comment_set.all().get(pk=comment_pk)
+    comment_to_delete.delete()
+
+    context = {'post': post, 'comments': comments}
 
     return render(request, 'blog/detail.html', context)
 
