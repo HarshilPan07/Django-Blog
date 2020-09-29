@@ -141,6 +141,29 @@ def post_view(request, board_pk, post_pk):
 
     return render(request, 'blog/detail.html', context)
 
+def edit_comment(request, board_pk, post_pk, comment_pk):
+    post = get_object_or_404(Post, pk=post_pk)
+    comments = post.get_recent_comments()
+    
+    comment_to_edit = post.comment_set.all().get(pk=comment_pk)
+    edit_comment_form = CommentForm(instance=comment_to_edit)
+
+    if request.method == 'POST':
+        edit_comment_form = CommentForm(request.POST, instance=comment_to_edit)
+
+        if edit_comment_form.is_valid():
+            edited_comment = edit_comment_form.save(commit=False)
+            edited_comment.post = post
+            edited_comment.author = request.user
+
+            edited_comment.save()
+
+            return redirect(reverse('post', args=[board_pk, post_pk]))
+
+    context = {'post': post, 'comments': comments, 'edit_comment_form': edit_comment_form}
+
+    return render(request, 'blog/detail.html', context)
+
 def post_view_top_comments(request, board_pk, post_pk):    
     post = get_object_or_404(Post, pk=post_pk)
     comments = sorted(post.comment_set.all(), key=lambda obj: -obj.get_rating())

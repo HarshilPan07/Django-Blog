@@ -41,7 +41,7 @@ class Post(models.Model):
 class Comment(models.Model):
     content = models.CharField("Comment", max_length=500)
     date_posted = models.DateTimeField(auto_now_add=True)
-    
+
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     likes = models.ManyToManyField(User, blank=True, related_name='comment_likes')

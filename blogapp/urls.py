@@ -36,7 +36,13 @@ from user.views import (
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    
     path('', include('blog.urls')),
+    path('register/', register, name='register'),
+    path('login/', Login.as_view(), name='login'),
+    path('logout/', Logout.as_view(), name='logout'),
+    path('subscriptions/', user_subscriptions, name='user-subscriptions'),
+
     path('profile/<int:pk>/', view_profile, name='view-profile'),
     path('profile/<int:pk>/top_posts/', profile_top_posts, name='profile-top-posts'),
     path('profile/<int:pk>/controversial_posts/', profile_controversial_posts, name='profile-controversial-posts'),
@@ -46,10 +52,6 @@ urlpatterns = [
     path('profile/likes/', profile_likes, name='profile-likes'),
     path('profile/dislikes/', profile_dislikes, name='profile-dislikes'),
     path('profile/update_information/', update_information, name='update-information'),
-    path('subscriptions/', user_subscriptions, name='user-subscriptions'),
-    path('register/', register, name='register'),
-    path('login/', Login.as_view(), name='login'),
-    path('logout/', Logout.as_view(), name='logout'),
 ]  
 
 if settings.DEBUG:
