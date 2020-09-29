@@ -41,7 +41,7 @@ urlpatterns = [
     
     path('create-post/', CreatePostView.as_view(), name='create-post'),
     path('boards/<int:board_pk>/post/<int:post_pk>/', post_view, name='post'),
-    path('boards/<int:board_pk>/post/<int:post_pk>/comment/<int:comment_pk>/edit-comment', edit_comment, name='edit-comment'),
+    path('boards/<int:board_pk>/post/<int:post_pk>/comment/<int:comment_pk>/edit-comment/', edit_comment, name='edit-comment'),
     path('boards/<int:board_pk>/post/<int:post_pk>/top-comments/', post_view_top_comments, name='post-top-comments'),
     path('boards/<int:board_pk>/post/<int:post_pk>/controversial-comments/', post_view_controversial_comments, name='post-controversial-comments'),
     path('boards/<int:board_pk>/post/<int:post_pk>/like/', like_post, name='like-post'),

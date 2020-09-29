@@ -156,7 +156,7 @@ def edit_comment(request, board_pk, post_pk, comment_pk):
 
             return redirect(reverse('post', args=[board_pk, post_pk]))
 
-    context = {'post': post, 'comments': comments, 'edit_comment_form': edit_comment_form}
+    context = {'post': post, 'comments': comments, 'edit_comment_form': edit_comment_form, 'comment_to_edit': comment_to_edit}
 
     return render(request, 'blog/detail.html', context)
 

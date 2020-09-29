@@ -89,18 +89,18 @@
         </div>
     </div>
     {% if comments %}
-        <div class='list-group py-1'>
+        <div class='list-group py-1 mb-3'>
             <ul class='list-group list-group-flush'>
                 {% for comment in comments %}
                 <li class='list-group-item'>
                     <div class='row'>
                         <small class='col'><a href="{% url 'view-profile' comment.author.id %}">{{ comment.author }}</a> {{ comment.date_posted }}</small>
                         {% if comment.author == user %}
-                            <small class='col-3'><a href="{% url 'edit-comment' board_pk=post.board.pk post_pk=post.pk comment_pk=comment.pk %}">Edit Comment</a></small>
+                            <small class='pr-3 justify-content-end'><a href="{% url 'edit-comment' board_pk=post.board.pk post_pk=post.pk comment_pk=comment.pk %}">Edit Comment</a></small>
                         {% endif %}
                     </div>
                     <div class='row'>
-                        <small>
+                        <small class='col'>
                             <a href="{% url 'like-comment' board_pk=post.board.id post_pk=post.id comment_pk=comment.id %}">
                                 <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-arrow-up-short" fill="#F73009" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
@@ -119,23 +119,22 @@
                                 </svg>
                             </a> 
                         </small>
-                        <div class='pl-4'>
-                            {{ comment.content}}
+                        <div class='col-10'>
+                            {% if comment.author == user and comment_to_edit.pk == comment.pk %}
+                                <form action="{% url 'edit-comment' board_pk=post.board.pk post_pk=post.pk comment_pk=comment.pk %}" method='POST'>
+                                    {% csrf_token %}
+                                    {{ edit_comment_form | crispy }}
+                                    
+                                    {% if edit_comment_form %}
+                                        <button class='btn btn-primary ml-2 my-3 align-self-end' type="submit">Edit Comment</button>
+                                        <a href="{% url 'post' board_pk=post.board.pk post_pk=post.pk %}" role="button" class='btn btn-danger'>Cancel</a>
+                                    {% endif %}
+                                </form>
+                            {% else %}
+                                {{ comment.content }}
+                            {% endif %}
                         </div>
                     </div>
-                    {% if comment.author == user %}
-                        <div class='row'>
-                            <form action="{% url 'edit-comment' board_pk=post.board.pk post_pk=post.pk comment_pk=comment.pk %}" method='POST'>
-                                {% csrf_token %}
-                                {{ edit_comment_form | crispy }}
-                                
-                                {% if edit_comment_form %}
-                                    <button class='btn btn-primary ml-2 my-3 align-self-end' type="submit">Edit Comment</button>
-                                    <a href="{% url 'post' board_pk=post.board.pk post_pk=post.pk %}" role="button" class='btn btn-danger'>Cancel</a>
-                                {% endif %}
-                            </form>
-                        </div>
-                    {% endif %}
                 </li>
                 {% endfor %}
             </ul>    
