@@ -152,11 +152,7 @@ def edit_comment(request, board_pk, post_pk, comment_pk):
         edit_comment_form = CommentForm(request.POST, instance=comment_to_edit)
 
         if edit_comment_form.is_valid():
-            edited_comment = edit_comment_form.save(commit=False)
-            edited_comment.post = post
-            edited_comment.author = request.user
-
-            edited_comment.save()
+            edit_comment_form.save()
 
             return redirect(reverse('post', args=[board_pk, post_pk]))
 
