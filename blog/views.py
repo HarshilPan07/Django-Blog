@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect, reverse, HttpResponseRedirect
+from django.utils import timezone
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
@@ -152,8 +153,10 @@ def edit_comment(request, board_pk, post_pk, comment_pk):
         edit_comment_form = CommentForm(request.POST, instance=comment_to_edit)
 
         if edit_comment_form.is_valid():
-            edit_comment_form.save()
-
+            comment_to_edit = edit_comment_form.save(commit=False)
+            comment_to_edit.date_edited = timezone.now()
+            comment_to_edit.save()
+            
             return redirect(reverse('post', args=[board_pk, post_pk]))
 
     context = {'post': post, 'comments': comments, 'edit_comment_form': edit_comment_form, 'comment_to_edit': comment_to_edit}
