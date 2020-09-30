@@ -82,13 +82,13 @@ class CreatePostView(LoginRequiredMixin, CreateView):
 class CreatePostInBoardView(LoginRequiredMixin, CreateView):
     model = Post
     template_name = 'blog/create_post.html'
-    form_class = PostForm()
+    fields = ['title', 'content']
 
     login_url = 'login'
 
     def form_valid(self, form):
-        form.instance.author = self.request.author
-        form.instance.board = Board.objects.get(self.kwargs['pk'])
+        form.instance.author = self.request.user
+        form.instance.board = Board.objects.get(pk=self.kwargs['board_pk'])
 
         return super().form_valid(form)
 

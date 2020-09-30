@@ -41,6 +41,7 @@ urlpatterns = [
     path('boards/<int:pk>/unsubscribe/', unsubscribe, name='unsubscribe'),
     
     path('create-post/', CreatePostView.as_view(), name='create-post'),
+    path('boards/<int:board_pk>/create-post/', CreatePostInBoardView.as_view(), name='create-post-in-board'),
     path('boards/<int:board_pk>/post/<int:post_pk>/', post_view, name='post'),
     path('boards/<int:board_pk>/post/<int:post_pk>/comment/<int:comment_pk>/edit-comment/', edit_comment, name='edit-comment'),
     path('boards/<int:board_pk>/post/<int:post_pk>/comment/<int:comment_pk>/delete-comment/', delete_comment, name='delete-comment'),

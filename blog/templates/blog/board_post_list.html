@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class='align-self-end'>
-            <a href="{% url 'create-post' %}" role='button' class='btn btn-outline-primary mr-2'>Create Post</a>
+            <a href="{% url 'create-post-in-board' board_pk=board.pk %}" role='button' class='btn btn-outline-primary mr-2'>Create Post</a>
         </div>
     </div>
 {% endblock header %}
