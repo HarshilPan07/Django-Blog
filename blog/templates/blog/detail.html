@@ -16,7 +16,7 @@
     </div>
     <div class='card-footer'>   
         <div class='row'>
-            <div class='col-10'>
+            <div class='mr-auto'>
                 <a href="{% url 'like-post' post.board.id post.id %}">
                     <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-arrow-up-short" fill="#F73009" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
@@ -36,10 +36,11 @@
                 </a> 
                 <small class='text-muted align-self-end'>{{ comments.count }} comments</small>
             </div>
-            <div class='col-2'>
+            <div class='pr-3'>
                 {% if user == post.author %}
-                <small><a href="{% url 'update-post' post.board.id post.id %}">Edit Post |</a></small>
-                <small><a href="{% url 'delete-post' post.board.id post.id %}">| Delete Post</a></small>
+                    <small><a href="{% url 'update-post' post.board.id post.id %}">Edit Post</a></small>
+                    <small>|</small>
+                    <small><a href="{% url 'delete-post' post.board.id post.id %}">Delete Post</a></small>
                 {% endif %}
             </div>
         </div>
@@ -51,10 +52,10 @@
     {% if user.is_authenticated %}
         <form action="{% url 'post' board_pk=post.board.pk post_pk=post.pk %}" method="POST" class='row'>
             {% csrf_token %}
-            <div class='col-10 mr-4'>
+            <div class='col-10 mr-auto'>
                 {{ comment_form | crispy }}
             </div>
-            <input class='btn btn-primary ml-2 my-3 align-self-end' name='add-comment-form' value='Add Comment' type="submit"></input>
+            <input class='btn btn-primary my-3 align-self-end' name='add-comment-form' value='Add Comment' type="submit"></input>
         </form>
     {% else %}
         <div class='row mx-3 py-2 border rounded' style="background-color: #f6f8f9;">
