@@ -3,7 +3,29 @@
 
 {% block header %}
 <div>
-    Search results for {{ search_string }}
+    <div class='row mx-1 my-3 py-3 border-bottom border rounded-lg' style="background-color: #f7f8f9;">
+        <div class="row dropdown">
+            <h5 class='align-self-end mx-4 lead'>Search results for {{ search_string }}</h5>
+            <button class="justify-content-end btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Sort By
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                {% if request.resolver_match.url_name == 'home' %}
+                    <a class="dropdown-item active" href="{% url 'home' %}">Recent</a>
+                    <a class="dropdown-item" href="{% url 'home-top-all' %}">Top</a>
+                    <a class="dropdown-item" href="{% url 'home-controversial' %}">Controversial</a>
+                {% elif request.resolver_match.url_name == 'home-top-all' %}
+                    <a class="dropdown-item" href="{% url 'home' %}">Recent</a>
+                    <a class="dropdown-item active" href="{% url 'home-top-all' %}">Top</a>
+                    <a class="dropdown-item" href="{% url 'home-controversial' %}">Controversial</a>
+                {% else %}
+                    <a class="dropdown-item" href="{% url 'home' %}">Recent</a>
+                    <a class="dropdown-item" href="{% url 'home-top-all' %}">Top</a>
+                    <a class="dropdown-item active" href="{% url 'home-controversial' %}">Controversial</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock header %}
 

@@ -30,8 +30,12 @@ def search_posts(request):
 
         if search_form.is_valid():
             search_string = search_form.cleaned_data['search_string']
-            posts = Post.objects.filter(Q(title__icontains=search_string) | Q(content__icontains=search_string))
-            
+            posts = list(Post.objects.filter(Q(title__icontains=search_string) | Q(content__icontains=search_string)))
+            comments = Comment.objects.prefetch_related('post').filter(content__icontains=search_string)
+
+            for comment in comments:
+                posts.append(comment.post)
+        
             paginator = Paginator(posts, 50)
             page_number = request.GET.get('page')
             page_obj = paginator.get_page(page_number)
