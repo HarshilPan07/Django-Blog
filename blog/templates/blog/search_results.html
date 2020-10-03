@@ -1,38 +1,14 @@
 {% extends 'blog/base.html' %}
+{% load crispy_forms_tags %}
 
 {% block header %}
-    <div class='row mx-1 my-3 py-3 border-bottom border rounded-lg' style="background-color: #f7f8f9;">
-        <div class='mr-auto'>
-            <div class="row dropdown">
-                <h5 class='align-self-end mx-4 lead'>Home</h5>
-                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Sort By
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    {% if request.resolver_match.url_name == 'home' %}
-                        <a class="dropdown-item active" href="{% url 'home' %}">Recent</a>
-                        <a class="dropdown-item" href="{% url 'home-top-all' %}">Top</a>
-                        <a class="dropdown-item" href="{% url 'home-controversial' %}">Controversial</a>
-                    {% elif request.resolver_match.url_name == 'home-top-all' %}
-                        <a class="dropdown-item" href="{% url 'home' %}">Recent</a>
-                        <a class="dropdown-item active" href="{% url 'home-top-all' %}">Top</a>
-                        <a class="dropdown-item" href="{% url 'home-controversial' %}">Controversial</a>
-                    {% else %}
-                        <a class="dropdown-item" href="{% url 'home' %}">Recent</a>
-                        <a class="dropdown-item" href="{% url 'home-top-all' %}">Top</a>
-                        <a class="dropdown-item active" href="{% url 'home-controversial' %}">Controversial</a>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-        <div class='align-self-end pr-3'>
-            <a href="{% url 'create-post' %}" role='button' class='btn btn-outline-primary'>Create Post</a>
-        </div>
-    </div>
+<div>
+    Search results for {{ search_string }}
+</div>
 {% endblock header %}
 
 {% block content %}
-    {% if posts %} 
+{% if posts %} 
     <div class='list-group py-3'>
         {% for post in page_obj %}
         <div class='d-flex bd-highlight'>
@@ -103,17 +79,16 @@
     </div>
     {% else %}
     <div class='jumbotron m-3'>
-        <h3 class='display-4'>Looks like there aren't any posts here!</h3>
+        <h3 class='display-4'>Looks like there aren't any results here!</h3>
         <div class='border-top pt-3'>
             <small class='text-muted'>Click "Create Post" above to add a new post.</small>
         </div>
     </div>
     {% endif %}
-
 {% endblock content %}
 
 {% block sidebar %}
-    <div class="list-group my-3">
+   <div class="list-group my-3">
         <a href="#" class="list-group-item list-group-item-action active disabled">Popular Boards</a>
         {% for board in popular_boards %}
             <a href="{% url 'board-detail-list' board.pk %}" class="list-group-item list-group-item-action">

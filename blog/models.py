@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.shortcuts import reverse, redirect
 from django.utils import timezone
+from datetime import timedelta
+import datetime
 
 class Board(models.Model):
     title = models.CharField(max_length=200, unique=True)
@@ -16,6 +18,9 @@ class Board(models.Model):
     def get_absolute_url(self):
         return reverse("board-detail-list", kwargs={"pk": self.pk})
     
+    def get_popularity_rating(self):
+        return ( self.post_set.filter(date_posted__gte=timezone.now()-timedelta(days=7)).count())
+
 class Post(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField(max_length=2000)
@@ -37,7 +42,13 @@ class Post(models.Model):
     
     def get_recent_comments(self):
         return self.comment_set.all().order_by('-date_posted')
-        
+
+    def get_num_comments(self):
+        return self.comment_set.all().count()
+
+    def get_num_votes(self):
+        return self.likes.count() + self.dislikes.count()
+
 class Comment(models.Model):
     content = models.CharField("Comment", max_length=500)
     date_posted = models.DateTimeField(auto_now_add=True)

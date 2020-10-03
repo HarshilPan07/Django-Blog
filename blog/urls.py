@@ -1,7 +1,8 @@
 from django.urls import path
 
 from .views import (
-        HomeView, 
+        HomeView,
+        search_posts, 
         Home_Most_Liked_View,
         Home_Most_Disliked_View,
         CreatePostView, 
@@ -31,7 +32,8 @@ urlpatterns = [
     
     path('top_all/', Home_Most_Liked_View.as_view(), name='home-top-all'),
     path('controversial/', Home_Most_Disliked_View.as_view(), name='home-controversial'),
-    
+    path('search/', search_posts, name='search-posts'),
+
     path('create-board/', CreateBoardView.as_view(), name='create-board'),
     path('boards/', BoardsView.as_view(), name='boards'),
     path('boards/<int:pk>/', board_detail, name='board-detail-list'),
