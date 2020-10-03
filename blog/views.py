@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 
 from .models import Board, Post, Comment
-from .forms import BoardForm, PostForm, CommentForm
+from .forms import BoardForm, PostForm, CommentForm, SearchForm
 
 class HomeView(ListView):
     model = Post
@@ -24,14 +24,17 @@ class HomeView(ListView):
 
 def search_posts(request):
     popular_boards = sorted(Board.objects.all(), key=lambda obj: -obj.get_popularity_rating())[:4]
-
+    
     if request.method == 'POST':    
-        posts = Post.objects.get(Q(title__icontains=request.POST.get['text-input']) | Q(content__icontains=request.POST.get['text-input']))
-        paginator = Paginator(posts, 50)
-        page_number = request.GET.get('page')
-        page_obj = paginator.get_page(page_number)
-        
-        search_string = request.POST
+        search_form = SearchForm(request.POST)
+
+        if search_form.is_valid():
+            search_string = search_form.cleaned_data['search_string']
+            posts = Post.objects.filter(Q(title__icontains=search_string) | Q(content__icontains=search_string))
+            
+            paginator = Paginator(posts, 50)
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
 
     context = {'popular_boards': popular_boards, 'search_string': search_string, 'posts': posts, 'page_obj': page_obj}
 
