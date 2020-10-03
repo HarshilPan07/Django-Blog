@@ -16,15 +16,7 @@ class HomeView(ListView):
     ordering = ['-date_posted']
     paginate_by = 50
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["popular_boards"] = sorted(Board.objects.all(), key=lambda obj: -obj.get_popularity_rating())[:4]
-
-        return context
-
 def search_posts(request):
-    popular_boards = sorted(Board.objects.all(), key=lambda obj: -obj.get_popularity_rating())[:4]
-    
     if request.method == 'POST':    
         search_form = SearchForm(request.POST)
 
@@ -40,7 +32,7 @@ def search_posts(request):
             page_number = request.GET.get('page')
             page_obj = paginator.get_page(page_number)
 
-    context = {'popular_boards': popular_boards, 'search_string': search_string, 'posts': posts, 'page_obj': page_obj}
+    context = {'search_string': search_string, 'posts': posts, 'page_obj': page_obj}
 
     return render(request, 'blog/search_results.html', context)
 
