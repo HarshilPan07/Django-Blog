@@ -1,4 +1,4 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, Form
 from django import forms
 
 from .models import Board, Post, Comment
@@ -21,3 +21,6 @@ class CommentForm(ModelForm):
     widgets = {
         'content': forms.TextInput(attrs={'class': 'form-control'}),
     }
+
+class SearchForm(Form):
+    search_string = forms.CharField(label='', max_length=200, widget=forms.TextInput(attrs={'class': 'form-control input-large mr-sm-2', 'placeholder': 'Search'}))

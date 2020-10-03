@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect, reverse, HttpResponseRedirect
+from django.db.models import Q
 from django.utils import timezone
 from django.core.paginator import Paginator
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -25,8 +26,7 @@ def search_posts(request):
     popular_boards = sorted(Board.objects.all(), key=lambda obj: -obj.get_popularity_rating())[:4]
 
     if request.method == 'POST':    
-        posts = Post.objects.filter(title__contains=request.POST, content__contains=request.POST)
-        
+        posts = Post.objects.get(Q(title__icontains=request.POST.get['text-input']) | Q(content__icontains=request.POST.get['text-input']))
         paginator = Paginator(posts, 50)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
