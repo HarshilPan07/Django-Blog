@@ -3,6 +3,7 @@ from django.urls import path
 from .views import (
         HomeView,
         search_posts, 
+        search_view_top,
         Home_Most_Liked_View,
         Home_Most_Disliked_View,
         CreatePostView, 
@@ -33,6 +34,7 @@ urlpatterns = [
     path('top_all/', Home_Most_Liked_View.as_view(), name='home-top-all'),
     path('controversial/', Home_Most_Disliked_View.as_view(), name='home-controversial'),
     path('search/', search_posts, name='search-posts'),
+    path('search/top', search_view_top, name='search-posts-top'),
 
     path('create-board/', CreateBoardView.as_view(), name='create-board'),
     path('boards/', BoardsView.as_view(), name='boards'),

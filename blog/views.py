@@ -17,6 +17,8 @@ class HomeView(ListView):
     paginate_by = 50
 
 def search_posts(request):
+    search_form = SearchForm(request.POST)
+
     if request.method == 'POST':    
         search_form = SearchForm(request.POST)
 
@@ -32,7 +34,28 @@ def search_posts(request):
             page_number = request.GET.get('page')
             page_obj = paginator.get_page(page_number)
 
-    context = {'search_string': search_string, 'posts': posts, 'page_obj': page_obj}
+    context = {'search_form': search_form, 'search_string': search_string, 'posts': posts, 'page_obj': page_obj}
+
+    return render(request, 'blog/search_results.html', context)
+
+def search_view_top(request):
+    search_form = SearchForm(request.POST)
+
+    if search_form.is_valid():
+        search_string = search_form.cleaned_data['search_string']
+        posts = list(Post.objects.filter(Q(title__icontains=search_string) | Q(content__icontains=search_string)))
+        comments = Comment.objects.prefetch_related('post').filter(content__icontains=search_string)
+
+        for comment in comments:
+            posts.append(comment.post)
+        
+        posts = sorted(posts, key=lambda obj: -obj.get_rating())
+        
+        paginator = Paginator(posts, 50)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+    context = {'search_form': search_form, 'search_string': search_string, 'posts': posts, 'page_obj': page_obj}
 
     return render(request, 'blog/search_results.html', context)
 
@@ -156,7 +179,6 @@ def post_view(request, board_pk, post_pk):
             comment.save()
             
             return redirect(reverse('post', args=[post.board.id, post.id]))
-        
     else:
         comment_form = CommentForm()
     

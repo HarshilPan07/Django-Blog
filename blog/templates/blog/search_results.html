@@ -10,13 +10,13 @@
                 Sort By
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                {% if request.resolver_match.url_name == 'home' %}
-                    <a class="dropdown-item active" href="{% url 'home' %}">Recent</a>
-                    <a class="dropdown-item" href="{% url 'home-top-all' %}">Top</a>
+                {% if request.resolver_match.url_name == 'search-posts' %}
+                    <a class="dropdown-item active" href="{% url 'search-posts' %}">Recent</a>
+                    <a class="dropdown-item" href="{% url 'search-posts-top' %}">Top</a>
                     <a class="dropdown-item" href="{% url 'home-controversial' %}">Controversial</a>
-                {% elif request.resolver_match.url_name == 'home-top-all' %}
-                    <a class="dropdown-item" href="{% url 'home' %}">Recent</a>
-                    <a class="dropdown-item active" href="{% url 'home-top-all' %}">Top</a>
+                {% elif request.resolver_match.url_name == 'search-posts-top' %}
+                    <a class="dropdown-item" href="{% url 'search-posts' %}">Recent</a>
+                    <a class="dropdown-item active" href="{% url 'search-posts-top' %}">Top</a>
                     <a class="dropdown-item" href="{% url 'home-controversial' %}">Controversial</a>
                 {% else %}
                     <a class="dropdown-item" href="{% url 'home' %}">Recent</a>
