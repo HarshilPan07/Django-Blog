@@ -17,10 +17,10 @@ class HomeView(ListView):
     paginate_by = 50
 
 def search_posts(request):
-    search_form = SearchForm(request.POST)
+    search_form = SearchForm(request.GET)
 
-    if request.method == 'POST':    
-        search_form = SearchForm(request.POST)
+    if request.method == 'GET':    
+        search_form = SearchForm(request.GET)
 
         if search_form.is_valid():
             search_string = search_form.cleaned_data['search_string']
@@ -39,7 +39,7 @@ def search_posts(request):
     return render(request, 'blog/search_results.html', context)
 
 def search_view_top(request):
-    search_form = SearchForm(request.POST)
+    search_form = SearchForm(request.GET)
 
     if search_form.is_valid():
         search_string = search_form.cleaned_data['search_string']
