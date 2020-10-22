@@ -29,7 +29,8 @@ def search_posts(request):
 
             for comment in comments:
                 posts.append(comment.post)
-        
+
+            posts = list(set(posts))
             paginator = Paginator(posts, 50)
             page_number = request.GET.get('page')
             page_obj = paginator.get_page(page_number)
